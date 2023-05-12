@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -17,6 +19,8 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +40,7 @@ class User extends Authenticatable
         'fecha_nacimiento',
         'email',
         'password',
+        'profile_photo_path',
         'estado'
     ];
 
@@ -69,30 +74,30 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    // public function adminlte_desc()
-    // {
-    //     $user = User::find(Auth()->user()->id);
-    //     $roles = $user->getRoleNames();
+    public function adminlte_desc()
+    {
+        $user = User::find(Auth()->user()->id);
+        $roles = $user->getRoleNames();
 
-    //     if ($roles->count()) {
-    //         foreach ($roles as $rol) {
-    //             $rol = $rol;
-    //         }
-    //     } else {
-    //         $rol = 'Sin rol asignado';
-    //     }
-    //     return $rol;
-    // }
+        if ($roles->count()) {
+            foreach ($roles as $rol) {
+                $rol = $rol;
+            }
+        } else {
+            $rol = 'Sin rol asignado';
+        }
+        return $rol;
+    }
 
-    // public function adminlte_profile_url()
-    // {
-    //     return 'user/profile';
-    // }
+    public function adminlte_profile_url()
+    {
+        return 'user/profile';
+    }
 
-    // public function adminlte_image()
-    // {   
-    //     $user = User::find(Auth()->user()->id);
+    public function adminlte_image()
+    {   
+        $user = User::find(Auth()->user()->id);
 
-    //     return '/../storage/users/'.$user->profile_photo_path;
-    // }
+        return '/../storage/users/'.$user->profile_photo_path;
+    }
 }

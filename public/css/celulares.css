@@ -1,0 +1,20 @@
+/* @media (min-width: 768px) {
+
+	.table-responsive {
+		max-width: 100%;
+	}
+} */
+
+  #tablaPrincipal_length{
+      text-align: left; 
+      font-size: 13px;
+    }
+
+    #tablaPrincipal_filter{
+      text-align: right;
+      font-size: 12px; 
+    }
+
+    #tablaPrincipal{
+      font-size: 12px
+    }

@@ -157,11 +157,6 @@ return [
 
     'providers' => ServiceProvider::defaultProviders()->merge([
         /*
-         * Laravel Framework Service Providers...
-         */
-        Spatie\Permission\PermissionServiceProvider::class,
-        
-        /*
          * Package Service Providers...
          */
 
@@ -175,6 +170,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
+
+        // Other Service Providers 
+        Spatie\Permission\PermissionServiceProvider::class,
         
     ])->toArray(),
 

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -20,7 +23,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('usuarios.create');//, compact('users')
+        $roles = Role::get();
+        return view('usuarios.create', compact('roles'));
     }
 
     /**
@@ -28,7 +32,51 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([            
+            'nombre' => 'required',
+            'email' => 'required|unique:users|email',
+            'prole_id' => 'required',
+            'password' => [
+                'required',
+                'min:5', // debe tener al menos 6 caracteres
+                //'regex:/[a-z]/', // debe contener al menos una letra minúscula
+                //'regex:/[A-Z]/', // debe contener al menos una letra mayúscula
+                //'regex:/[0-9]/' // debe contener al menos un dígito
+            ],
+            'confirm_password' => 'required|same:password'
+        ]);
+
+        $files = $request->file('imagen');
+        $destinationPath = base_path('public/storage/users/');
+        
+        if(isset($files)){
+            $file_name = Carbon::now()->second.$files->getClientOriginalName();
+            $files->move($destinationPath , $file_name);
+        }
+        else{
+            $file_name = 'logo.jpeg';
+        }
+        
+        $user = User::create([
+            'nombre' => $request->nombre,
+            'apellido_paterno' => $request->apellido_paterno,
+            'apellido_materno' => $request->apellido_materno,
+            'direccion' => $request->direccion,
+            'dni' => $request->dni,
+            'celular' => $request->celular,
+            'sexo' => $request->sexo,
+            'rol' => $request->role_name,
+            'fecha_contratacion' => $request->fecha_contratacion,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'profile_photo_path' => $file_name,
+            'estado' => '1'
+        ]);
+
+        $user->roles()->sync($request->role_id);
+
+        return redirect()->route('users.index')->with('info', 'registrado');  
     }
 
     /**
@@ -42,17 +90,54 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        $roles = Role::get();
+        return view('usuarios.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+
+        $files = $request->file('imagen');
+        $destinationPath = base_path('public/storage/users/');
+
+        if(isset($files)){
+            $file_name = Carbon::now()->second.$files->getClientOriginalName();
+            $files->move($destinationPath , $file_name);
+        }
+        else{
+            $file_name = $user->profile_photo_path;
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'identificador' => $request->identificador,
+            'celular' => $request->celular,
+            'provincia' => $request->provincia,
+            'distrito' => $request->distrito,
+            'direccion' => $request->direccion,
+            'referencia' => $request->referencia,
+            'profile_photo_path' => $file_name
+        ]);
+
+        if ($request->prole_id != " " && $request->role_name != "") {
+            $user->roles()->sync($request->role_id);
+
+            $user->update([
+                'rol' => $request->role_name
+            ]);
+        }
+
+        return redirect()->route('users.index')->with('info', 'actualizado');
     }
 
     /**
@@ -73,5 +158,14 @@ class UserController extends Controller
             ]);
         }
         return response()->json(['html' => $html]);
+    }
+
+    public function reset(User $user)
+    {
+        $user->update([
+            'password' => bcrypt('123456789')
+        ]);
+
+        return redirect()->route('users.index')->with('info', 'reseteado');
     }
 }

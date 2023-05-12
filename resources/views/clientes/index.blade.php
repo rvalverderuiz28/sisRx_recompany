@@ -1,54 +1,54 @@
 @extends('adminlte::page')
 
-@section('title', 'Lista de Usuarios')
+@section('title', 'Lista de Estados')
 
 @section('content_header')
-  <h1>Lista de USUARIOS
+  <h1>Lista de CLIENTES
     {{-- @can('users.create') --}}
-      <a href="{{ route('users.create') }}" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</a>
+      <a href="" data-target="#modal-add" data-toggle="modal" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</a>
     {{-- @endcan --}}
   </h1>
 @stop
 
 @section('content')
-
   <div class="card">
     <div class="card-body">
       <table id="tablaPrincipal" class="table table-striped table-responsive">
         <thead>
           <tr>
             <th scope="col">CODIGO</th>
-            <th scope="col">NOMBRES Y APELLIDOS</th>
+            <th scope="col">DOCUMENTO</th>
+            <th scope="col">RAZON SOCIAL</th>
             <th scope="col">DIRECCION</th>
-            <th scope="col">DNI</th>
-            <th scope="col">SEXO</th>
-            <th scope="col">ROL</th>
-            <th scope="col">FECHA DE CONTRATACION</th>
-            <th scope="col">FECHA DE NACIMIENTO</th>
+            <th scope="col">CONTACTO</th>
+            <th scope="col">CELULAR</th>
             <th scope="col">CORREO</th>
             <th scope="col">ESTADO</th>
             <th scope="col">ACCIONES</th>
           </tr>
         </thead>
       </table>
-      @include('usuarios.modal.desactivar')
-      {{-- @include('usuarios.modal.activar')
-      @include('usuarios.modal.reset') --}}
+      @include('estados.modal.desactivar')
+      @include('estados.modal.add')
     </div>
   </div>
 @stop
 
 @section('css')
-  {{-- <link rel="stylesheet" href="../css/admin_custom.css"> --}}  
+  <link rel="stylesheet" media="only screen and (max-width: 768px)" href="../css/celulares.css">
+  {{-- <link rel="stylesheet" media="only screen and (min-width: 768px)" href="../css/computadoras.css"> --}}
 @stop
 
 @section('js')
-  {{-- <script src="{{ asset('js/datatables.js') }}"></script> --}}
+  <script> 
+    if (screen.width >768) 
+    $("#tablaPrincipal").removeClass("table-responsive");
+  </script>  
 
   @if (session('info') == 'registrado' || session('info') == 'actualizado' || session('info') == 'eliminado')
     <script>
       Swal.fire(
-        'Usuario {{ session('info') }} correctamente',
+        'Estado {{ session('info') }} correctamente',
         '',
         'success'
       )
@@ -71,15 +71,15 @@
         //console.log(idunico);
         $("#hiddenIDdelete").val(idunico);
         if(idunico<10){
-          idunico = 'USER0000'+idunico;
+          idunico = 'CLI0000'+idunico;
         }else if(idunico<100){
-          idunico = 'USER000'+idunico;
+          idunico = 'CLI000'+idunico;
         }else if(idunico<1000){
-          idunico = 'USER00'+idunico;
+          idunico = 'CLI00'+idunico;
         }else if(idunico<10000){
-          idunico = 'USER0'+idunico;
+          idunico = 'CLI0'+idunico;
         }else{
-          idunico = 'USER'+idunico;
+          idunico = 'CLI'+idunico;
         }
 
         $(".textcode").html(idunico);
@@ -93,31 +93,29 @@
         searching: true,//buscar
         //bDestroy: true,//agregado para evitar adventencia de creacion          
         "order": [[ 0, "desc" ]],
-        ajax: "{{ route('datatable.usuarios') }}",
+        ajax: "{{ route('datatable.clientes') }}",
         columns: [
             { data: 'id', name: 'id',//ID
                 render: function ( data, type, row, meta ) {             
                   if(row.id<10){
-                    return 'USER0000'+row.id;
+                    return 'CLI0000'+row.id;
                   }else if(row.id<100){
-                    return 'USER000'+row.id;
+                    return 'CLI000'+row.id;
                   }else if(row.id<1000){
-                    return 'USER00'+row.id;
+                    return 'CLI00'+row.id;
                   }else if(row.id<10000){
-                    return 'USER0'+row.id;
+                    return 'CLI0'+row.id;
                   }else{
-                    return 'USER'+row.id;
+                    return 'CLI'+row.id;
                   } 
                 }
             },
-            { data: 'nombres', name: 'nombres' },//NOMBRE COMPLETO
-            { data: 'direccion', name: 'direccion' },//DIRECCION         
-            { data: 'dni', name: 'dni' },//DNI
-            { data: 'sexo', name: 'sexo'},//SEXO
-            { data: 'rol', name: 'rol' },//ROL   
-            { data: 'fecha_contratacion', name: 'fecha_contratacion' },//FECHA DE CONTRATACION
-            { data: 'fecha_nacimiento', name: 'fecha_nacimiento'},//FECHA DE NACIMIENTO
-            { data: 'email', name: 'email'},//CORREO   
+            { data: 'documento', name: 'documento' },//TIPO Y NUMERO DE DOCUMENTO
+            { data: 'razon_social', name: 'razon_social' },//RAZON SOCIAL         
+            { data: 'direccion', name: 'direccion' },//TIPO Y NUMERO DE DOCUMENTO
+            { data: 'contacto', name: 'contacto' },//RAZON SOCIAL  
+            { data: 'celular', name: 'celular' },//TIPO Y NUMERO DE DOCUMENTO
+            { data: 'correo', name: 'correo' },//RAZON SOCIAL  
             { data: 'estado', name: 'estado',//ESTADO   
               render: function ( data, type, row, meta ) {
                 if(row.estado==null){
@@ -180,7 +178,7 @@
     console.log(formData);
     $.ajax({
       type:'POST',
-      url:"{{ route('userdeleteRequest.post') }}",
+      url:"{{ route('clienteDeleteRequest.post') }}",
       data:formData,
     }).done(function (data) {
       $("#modal-delete").modal("hide");
