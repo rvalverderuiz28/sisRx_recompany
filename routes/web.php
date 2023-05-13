@@ -52,5 +52,6 @@ Route::middleware([
     //ESTADOS
     Route::resource('estados', EstadosController::class)->names('estados');
     Route::post('estadoDeleteRequest', [EstadosController::class, 'destroyid'])->name('estadoDeleteRequest.post');
+    Route::get('estados.showId', [EstadosController::class, 'showId'])->name('estados.showId');
 
 });

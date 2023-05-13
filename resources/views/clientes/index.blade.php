@@ -5,7 +5,7 @@
 @section('content_header')
   <h1>Lista de CLIENTES
     {{-- @can('users.create') --}}
-      <a href="" data-target="#modal-add" data-toggle="modal" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</a>
+    <a href="{{ route('clientes.create') }}" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</a>
     {{-- @endcan --}}
   </h1>
 @stop
@@ -28,8 +28,8 @@
           </tr>
         </thead>
       </table>
-      @include('estados.modal.desactivar')
-      @include('estados.modal.add')
+      @include('clientes.modal.desactivar')
+      @include('clientes.modal.add')
     </div>
   </div>
 @stop
@@ -48,7 +48,7 @@
   @if (session('info') == 'registrado' || session('info') == 'actualizado' || session('info') == 'eliminado')
     <script>
       Swal.fire(
-        'Estado {{ session('info') }} correctamente',
+        'Cliente {{ session('info') }} correctamente',
         '',
         'success'
       )
@@ -182,9 +182,21 @@
       data:formData,
     }).done(function (data) {
       $("#modal-delete").modal("hide");
-      //resetearcamposdelete();          
-      $('#tablaPrincipal').DataTable().ajax.reload();      
+      //resetearcamposdelete(); 
+      alertaClienteDelete();           
+      $('#tablaPrincipal').DataTable().ajax.reload();    
+      
     });
+  }
+</script>
+
+<script>
+  function alertaClienteDelete(){
+    Swal.fire(
+        'Cliente ELIMINADO correctamente',
+        '',
+        'success'
+    )
   }
 </script>
   

@@ -56,7 +56,7 @@ class DatatableController extends Controller
         return Datatables::of($clientes)
                     ->addIndexColumn()
                     ->addColumn('action', function($clientes){    
-                        $btn='<a href="'.route('clientes.show', $clientes).'" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</a> ';
+                        $btn='<a href="#" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</a> ';//'.route('clientes.show', $clientes).'
                         $btn=$btn.'<a href="'.route('clientes.edit', $clientes->id).'" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a> ';
                         $btn = $btn.'<a href="" data-target="#modal-delete" data-toggle="modal" data-delete="'.$clientes->id.'"><button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button></a>';
                         return $btn;
@@ -79,8 +79,10 @@ class DatatableController extends Controller
         return Datatables::of($estados)
                     ->addIndexColumn()
                     ->addColumn('action', function($estados){    
-                        $btn='<a href="'.route('estados.show', $estados).'" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</a> ';
+                        // $btn='<a href="'.route('estados.show', $estados).'" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</a> ';
+                        $btn = '<a href="" data-target="#modal-show" data-toggle="modal" data-opcion="'.$estados->id.'"><button class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</button></a> ';
                         $btn=$btn.'<a href="'.route('estados.edit', $estados->id).'" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a> ';
+                        // $btn = $btn.'<a href="" data-target="#modal-update" data-toggle="modal" data-update="'.$estados->id.'"><button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Editar</button></a>';
                         $btn = $btn.'<a href="" data-target="#modal-delete" data-toggle="modal" data-delete="'.$estados->id.'"><button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button></a>';
                         return $btn;
                     })

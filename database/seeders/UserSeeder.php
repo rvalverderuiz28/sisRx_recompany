@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'apellido_materno' => '',
             'direccion' => 'casa',
             'dni' => '99999999',
-            'sexo' => 'Masculino',
+            'sexo' => 'MASCULINO',
             'fecha_contratacion' => '2020-02-01',
             'fecha_nacimiento' => '1992-02-28',
             'email' => 'correo@correo.com',

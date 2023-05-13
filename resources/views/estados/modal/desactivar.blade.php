@@ -3,7 +3,7 @@
   <div class="modal-dialog">{{-- style="max-width: 600px!important;" --}}
     <div class="modal-content">
       <div class="modal-header bg-danger">
-        <h5 class="modal-title" id="exampleModalLabel">DESACTIVAR ESTADO</h5>
+        <h5 class="modal-title" id="exampleModalLabel">ELIMINAR ESTADO</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -14,7 +14,7 @@
       <div class="modal-body">
         <div class="form-row">
           <div class="form-group col-lg-12">
-            <p style="text-align: justify;">Confirme si desea <strong>DESACTIVAR</strong> el estado: <strong class="textcode"></strong></p>
+            <p style="text-align: justify;">Confirme si desea <strong>ELIMINAR</strong> el estado: <strong class="textcode"></strong></p>
           </div>
         </div>
       </div>

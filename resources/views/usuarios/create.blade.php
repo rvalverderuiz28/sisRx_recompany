@@ -50,8 +50,7 @@
         </div>
 
         <div class="form-group col-lg-6">
-          <div class="form-row">
-            
+          <div class="form-row">            
             <div class="form-group col-lg-12">
               {!! Form::label('direccion', 'Dirección') !!}
               {!! Form::text('direccion', null, ['class' => 'form-control', 'id' => 'direccion', 'placeholder' => 'Ingrese dirección']) !!}
@@ -158,12 +157,14 @@
   <script>
     $("#prole_id").change(mostrarValoresRol);
 
+  //MOSTRAR VALORES
     function mostrarValoresRol() {
       datosRol = document.getElementById('prole_id').value.split('_');
       $("#role_id").val(datosRol[0]);
       $("#role_name").val(datosRol[1]);
     }
 
+  //VALIDAR LARGO DE CAMPO NUMERICO
     function maxLengthCheck(object)
     {
       if (object.value.length > object.maxLength)

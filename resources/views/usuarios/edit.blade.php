@@ -12,10 +12,24 @@
     {!! Form::model($user, ['route' => ['users.update', $user], 'method' => 'put', 'autocomplete' => 'off', 'enctype'=>'multipart/form-data', 'id'=>'formulario', 'files'=>true]) !!}
     <div class="card-body">
       <div class="form-row">
-        <div class="form-group col-lg-6">
-          {!! Form::label('name', 'Nombres y Apellidos') !!}
-          {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Ingrese nombres completos']) !!}
-          @error('name')
+        <div class="form-group col-lg-4">
+          {!! Form::label('nombre', 'Nombres') !!}
+          {!! Form::text('nombre', null, ['class' => 'form-control', 'id' => 'nombre', 'placeholder' => 'Ingrese nombres completos']) !!}
+          @error('nombre')
+            <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>
+        <div class="form-group col-lg-3">
+          {!! Form::label('apellido_paterno', 'Apellido paterno') !!}
+          {!! Form::text('apellido_paterno', null, ['class' => 'form-control', 'id' => 'apellido_paterno', 'placeholder' => 'Ingrese apellido paterno']) !!}
+          @error('apellido_paterno')
+            <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>
+        <div class="form-group col-lg-3">
+          {!! Form::label('apellido_materno', 'Apellido materno') !!}
+          {!! Form::text('apellido_materno', null, ['class' => 'form-control', 'id' => 'apellido_materno', 'placeholder' => 'Ingrese apellido materno']) !!}
+          @error('apellido_materno')
             <small class="text-danger">{{ $message }}</small>
           @enderror
         </div>
@@ -37,52 +51,47 @@
           {!! Form::hidden('role_id', null, ['id' => 'role_id']) !!}
           {!! Form::hidden('role_name', null, ['id' => 'role_name']) !!}
         </div>
-        <div class="form-group col-lg-2">
-          {!! Form::label('identificador', 'Identificador') !!}
-          {!! Form::text('identificador', null, ['class' => 'form-control', 'id' => 'identificador', 'placeholder' => 'Ingrese identificador']) !!}
-          @error('identificador')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-5">
-          {!! Form::label('email', 'Correo Electrónico') !!}
-          {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Ingrese correo electrónico']) !!}
-          @error('email')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-5">
-          {!! Form::label('celular', 'Celular personal') !!}
-          {!! Form::number('celular', null, ['class' => 'form-control', 'id' => 'celular', 'min' =>'0', 'max' => '999999999', 'maxlength' => '9', 'oninput' => 'maxLengthCheck(this)']) !!}
-          @error('celular')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-6">
-          {!! Form::label('provincia', 'Provincia') !!}
-          {!! Form::text('provincia', null, ['class' => 'form-control', 'id' => 'provincia']) !!}
-          @error('provincia')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-6">
-          {!! Form::label('distrito', 'Distrito') !!}
-          {!! Form::text('distrito', null, ['class' => 'form-control', 'id' => 'distrito']) !!}
-          @error('distrito')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-6">
+        <div class="form-group col-lg-12">
           {!! Form::label('direccion', 'Dirección') !!}
-          {!! Form::text('direccion', null, ['class' => 'form-control', 'id' => 'direccion']) !!}
+          {!! Form::text('direccion', null, ['class' => 'form-control', 'id' => 'direccion', 'placeholder' => 'Ingrese dirección']) !!}
           @error('direccion')
             <small class="text-danger">{{ $message }}</small>
           @enderror
         </div>
-        <div class="form-group col-lg-6">
-          {!! Form::label('referencia', 'Referencia') !!}
-          {!! Form::text('referencia', null, ['class' => 'form-control', 'id' => 'referencia']) !!}
-          @error('referencia')
+        <div class="form-group col-lg-12">
+          {!! Form::label('dni', 'DNI') !!}
+          {!! Form::text('dni', null, ['class' => 'form-control', 'id' => 'dni', 'placeholder' => 'Ingrese número de DNI']) !!}
+          @error('dni')
+            <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>
+        <div class="form-group col-lg-12">
+          {!! Form::label('sexo', 'Sexo') !!}
+          {{-- {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Ingrese nombres completos']) !!} --}}
+          {!! Form::select('sexo', $sexos, $user->sexo, ['class' => 'form-control', 'id' => 'sexo', 'placeholder' => '---- SELECCIONE ----']) !!}
+          @error('sexo')
+            <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>
+        
+        <div class="form-group col-lg-12">
+          {!! Form::label('celular', 'Celular personal') !!}
+          {!! Form::number('celular', null, ['class' => 'form-control', 'id' => 'celular', 'min' =>'0', 'max' => '999999999', 'maxlength' => '9', 'oninput' => 'maxLengthCheck(this)', 'placeholder' => 'Ingrese número celular']) !!}
+          @error('celular')
+            <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>
+        <div class="form-group col-lg-12">
+          {!! Form::label('fecha_contratacion', 'Fecha de contratación') !!}
+          {!! Form::date('fecha_contratacion', null, ['class' => 'form-control', 'id' => 'fecha_contratacion', 'placeholder' => 'Ingrese fecha de contratación']) !!}
+          @error('fecha_contratacion')
+            <small class="text-danger">{{ $message }}</small>
+          @enderror
+        </div>
+        <div class="form-group col-lg-12">
+          {!! Form::label('fecha_nacimiento', 'Fecha de nacimiento') !!}
+          {!! Form::date('fecha_nacimiento', null, ['class' => 'form-control', 'id' => 'fecha_nacimiento', 'placeholder' => 'Ingrese fecha de nacimiento']) !!}
+          @error('fecha_nacimiento')
             <small class="text-danger">{{ $message }}</small>
           @enderror
         </div>
@@ -113,21 +122,23 @@
 @stop
 
 @section('js')
-  <script>
-    $("#prole_id").change(mostrarValores);
+<script>
+  $("#prole_id").change(mostrarValoresRol);
 
-    function mostrarValores() {
-      datosArticulo = document.getElementById('prole_id').value.split('_');
-      $("#role_id").val(datosArticulo[0]);
-      $("#role_name").val(datosArticulo[1]);
-    }
+//MOSTRAR VALORES
+  function mostrarValoresRol() {
+    datosRol = document.getElementById('prole_id').value.split('_');
+    $("#role_id").val(datosRol[0]);
+    $("#role_name").val(datosRol[1]);
+  }
 
-  //VALIDAR CAMPO CELULAR
-    function maxLengthCheck(object)
-    {
-      if (object.value.length > object.maxLength)
-        object.value = object.value.slice(0, object.maxLength)
-    }
+//VALIDAR LARGO DE CAMPO NUMERICO
+  function maxLengthCheck(object)
+  {
+    if (object.value.length > object.maxLength)
+      object.value = object.value.slice(0, object.maxLength)
+  }
+
   //CAMBIAR IMAGEN
     document.getElementById("imagen").addEventListener('change', cambiarImagen);
 
@@ -149,32 +160,50 @@
 
     function validarFormulario(evento) {
       evento.preventDefault();
-      var name = document.getElementById('name').value;
-      var identificador = document.getElementById('identificador').value;
-      var celular = document.getElementById('celular').value;
-      var provincia = document.getElementById('provincia').value;
-      var distrito = document.getElementById('distrito').value;
+      var nombre = document.getElementById('nombre').value;
+      var apellido_paterno = document.getElementById('apellido_paterno').value;
+      var apellido_materno = document.getElementById('apellido_materno').value;
       var direccion = document.getElementById('direccion').value;
-      var referencia = document.getElementById('referencia').value;
-      var email = document.getElementById('email').value;
-      if (name == '') {
+      var dni = document.getElementById('dni').value;
+      var celular = document.getElementById('celular').value;
+      var sexo = document.getElementById('sexo').value;
+      var prole_id = document.getElementById('prole_id').value;
+      var role_id = document.getElementById('role_id').value;
+      var role_name = document.getElementById('role_name').value;
+      var fecha_contratacion = document.getElementById('fecha_contratacion').value;
+      var fecha_nacimiento = document.getElementById('fecha_nacimiento').value;
+      if (nombre == '' || nombre == ' ') {
           Swal.fire(
             'Error',
             'Ingrese nombre del usuario a registrar',
             'warning'
           )
         }
-        else if (identificador == '') {
+        else if (apellido_paterno == '' || apellido_paterno == ' ') {
           Swal.fire(
             'Error',
-            'Agregue un identificador para este usuario',
+            'Ingrese el apellido paterno del usuario a registrar',
             'warning'
           )
         }
-        else if (celular == ''){
+        else if (apellido_materno == '' || apellido_materno == ' ') {
           Swal.fire(
             'Error',
-            'Agregue número celular para este usuario',
+            'Ingrese el apellido materno del usuario a registrar',
+            'warning'
+          )
+        }
+        else if (direccion == '' || direccion == ' ') {
+          Swal.fire(
+            'Error',
+            'Ingrese la dirección del usuario a registrar',
+            'warning'
+          )
+        }
+        else if (dni.length != 8) {
+          Swal.fire(
+            'Error',
+            'El número de DNI del usuario debe tener 8 dígitos',
             'warning'
           )
         }
@@ -185,44 +214,30 @@
             'warning'
           )
         }
-        else if (provincia == ''){
+        else if (sexo == ''){
           Swal.fire(
             'Error',
-            'Registre la provincia del usuario',
+            'Seleccione el sexo del usuario a registrar',
             'warning'
           )
         }
-        else if (distrito == ''){
+        else if (fecha_contratacion == ''){
           Swal.fire(
             'Error',
-            'Registre el distrito del usuario',
+            'Ingrese la fecha de contratación del usuario a registrar',
             'warning'
           )
         }
-        else if (direccion == ''){
+        else if (fecha_nacimiento == ''){
           Swal.fire(
             'Error',
-            'Registre la dirección del usuario',
-            'warning'
-          )
-        }
-        else if (referencia == ''){
-          Swal.fire(
-            'Error',
-            'Registre la referencia del usuario',
-            'warning'
-          )
-        }
-        else if (email == ''){
-          Swal.fire(
-            'Error',
-            'Registre el email del usuario',
+            'Ingrese la fecha de nacimiento del usuario a registrar',
             'warning'
           )
         }
         else {
           this.submit();
-        }      
+        }    
     }
   </script>
 @endsection

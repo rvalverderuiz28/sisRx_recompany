@@ -1,107 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', 'Registro de Usuarios')
+@section('title', 'Actualizar de Clientes')
 
 @section('content_header')
-  <h1>Actualizar Usuario</h1>
+  <h1>Actualizar Cliente</h1>
 @stop
 
 @section('content')
 
   <div class="card">
-    {!! Form::model($user, ['route' => ['users.update', $user], 'method' => 'put', 'autocomplete' => 'off', 'enctype'=>'multipart/form-data', 'id'=>'formulario', 'files'=>true]) !!}
+    {!! Form::model($cliente, ['route' => ['clientes.update', $cliente], 'method' => 'put', 'autocomplete' => 'off', 'enctype'=>'multipart/form-data', 'id'=>'formulario', 'files'=>true]) !!}
     <div class="card-body">
-      <div class="form-row">
-        <div class="form-group col-lg-6">
-          {!! Form::label('name', 'Nombres y Apellidos') !!}
-          {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Ingrese nombres completos']) !!}
-          @error('name')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-3">
-          {!! Form::label('role_id', 'Rol actual') !!}
-          {!! Form::text('rol', null, ['class' => 'form-control', 'placeholder' => 'Ingrese nombres completos', 'disabled']) !!}
-        </div>
-        <div class="form-group col-lg-3">
-          {!! Form::label('role_id', 'Nuevo Rol') !!}
-          <select name="prole_id" id="prole_id" class="form-control">
-            <option value=" ">----SELECCIONE----</option>
-            @foreach ($roles as $role)
-              <option value="{{ $role->id }}_{{ $role->name }}">{{ $role->name }}</option>
-            @endforeach
-          </select>
-          @error('prole_id')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-          {!! Form::hidden('role_id', null, ['id' => 'role_id']) !!}
-          {!! Form::hidden('role_name', null, ['id' => 'role_name']) !!}
-        </div>
-        <div class="form-group col-lg-2">
-          {!! Form::label('identificador', 'Identificador') !!}
-          {!! Form::text('identificador', null, ['class' => 'form-control', 'id' => 'identificador', 'placeholder' => 'Ingrese identificador']) !!}
-          @error('identificador')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-5">
-          {!! Form::label('email', 'Correo Electrónico') !!}
-          {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email', 'placeholder' => 'Ingrese correo electrónico']) !!}
-          @error('email')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-5">
-          {!! Form::label('celular', 'Celular personal') !!}
-          {!! Form::number('celular', null, ['class' => 'form-control', 'id' => 'celular', 'min' =>'0', 'max' => '999999999', 'maxlength' => '9', 'oninput' => 'maxLengthCheck(this)']) !!}
-          @error('celular')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-6">
-          {!! Form::label('provincia', 'Provincia') !!}
-          {!! Form::text('provincia', null, ['class' => 'form-control', 'id' => 'provincia']) !!}
-          @error('provincia')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-6">
-          {!! Form::label('distrito', 'Distrito') !!}
-          {!! Form::text('distrito', null, ['class' => 'form-control', 'id' => 'distrito']) !!}
-          @error('distrito')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-6">
-          {!! Form::label('direccion', 'Dirección') !!}
-          {!! Form::text('direccion', null, ['class' => 'form-control', 'id' => 'direccion']) !!}
-          @error('direccion')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-6">
-          {!! Form::label('referencia', 'Referencia') !!}
-          {!! Form::text('referencia', null, ['class' => 'form-control', 'id' => 'referencia']) !!}
-          @error('referencia')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-12 border rounded card-body border-secondary" style="text-align: center">
-          <h4 style="text-align: center;" class="mb-3"><b>FOTO DE PERFIL</b></h4>
-          <div class="form-row">
-            <div class="form-group col-lg-6" style="margin-top: 5%">
-              {!! Form::label('imagen', 'Seleccione') !!}
-              @csrf
-              {!! Form::file('imagen', ['class' => 'form-control-file', 'accept' => 'image/*']) !!}
-            </div>
-            <div class="form-group col-lg-6">
-              <div class="image-wrapper">
-                <img id="picture" src="{{ asset('storage/users/'. $user->profile_photo_path ) }}" alt="Imagen de perfil" height="300px" width="300px">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      @include('clientes.partials.form')
     </div>
     <div class="card-footer">
       <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>

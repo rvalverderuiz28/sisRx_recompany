@@ -93,7 +93,12 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::get();
-        return view('usuarios.edit', compact('user', 'roles'));
+        $sexos = [
+            "MASCULINO" => 'MASCULINO',
+            "FEMENINO" => 'FEMENINO'
+        ];
+        
+        return view('usuarios.edit', compact('user', 'roles', 'sexos'));
     }
 
     /**
@@ -102,8 +107,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required',
+            'name' => 'required'
         ]);
 
         $files = $request->file('imagen');
@@ -118,18 +122,19 @@ class UserController extends Controller
         }
 
         $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'identificador' => $request->identificador,
-            'celular' => $request->celular,
-            'provincia' => $request->provincia,
-            'distrito' => $request->distrito,
+            'nombre' => $request->nombre,
+            'apellido_paterno' => $request->apellido_paterno,
+            'apellido_materno' => $request->apellido_materno,
             'direccion' => $request->direccion,
-            'referencia' => $request->referencia,
-            'profile_photo_path' => $file_name
+            'dni' => $request->dni,
+            'celular' => $request->celular,
+            'sexo' => $request->sexo,
+            'fecha_contratacion' => $request->fecha_contratacion,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'profile_photo_path' => $file_name,
         ]);
 
-        if ($request->prole_id != " " && $request->role_name != "") {
+        if ($request->prole_id != "" && $request->role_name != "") {
             $user->roles()->sync($request->role_id);
 
             $user->update([
@@ -145,7 +150,7 @@ class UserController extends Controller
      */
     public function destroyid(Request $request)
     {
-        //modificar primero
+        //VERIFICAR QUE EXISTE DATO
         if (!$request->hiddenID) {
             $html='';
         } else {

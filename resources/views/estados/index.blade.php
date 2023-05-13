@@ -26,6 +26,7 @@
       </table>
       @include('estados.modal.desactivar')
       @include('estados.modal.add')
+      @include('estados.modal.show')
     </div>
   </div>
 @stop
@@ -159,6 +160,42 @@
         clickformdelete();
       })
 
+      $('#modal-show').on('show.bs.modal', function (event) {
+
+      var button = $(event.relatedTarget) 
+      var idunico = button.data('opcion')//ID
+      console.log(idunico);
+
+        $.ajax({
+          url: "{{ route('estados.showId') }}?estado_id=" + idunico,
+          method: 'GET',
+          dataType:'JSON',
+          success: function(data) {
+            let result=JSON.parse(JSON.stringify(data.html[0]));
+            let codigo='';
+            if(result['id']<10)
+            {
+              codigo='EST000'+result['id'];
+            }else if(result['id']<100)
+            {
+              codigo='EST00'+result['id'];
+            }else if(result['id']<1000)
+            {
+              codigo='EST0'+result['id'];
+            }else if(result['id']<10000)
+            {
+              codigo='EST'+result['id'];
+            }
+            $(".textcode").html(codigo);
+            $("#nombre").val(result['nombre']);
+            $(".nombre").html(result['nombre']);
+            $("#descripcion").val(result['descripcion']);
+            $(".descripcion").html(result['descripcion']);
+            $("#hiddenId").val(result['nombre']);
+            $("#hiddenId2").val(result['descripcion']);
+          }
+        });
+      });
     });
   </script>
 
@@ -174,9 +211,20 @@
       data:formData,
     }).done(function (data) {
       $("#modal-delete").modal("hide");
-      //resetearcamposdelete();          
+      //resetearcamposdelete();
+      alertaEstadoDelete();       
       $('#tablaPrincipal').DataTable().ajax.reload();      
     });
+  }
+</script>
+
+<script>
+  function alertaEstadoDelete(){
+    Swal.fire(
+        'Estado ELIMINADO correctamente',
+        '',
+        'success'
+    )
   }
 </script>
   

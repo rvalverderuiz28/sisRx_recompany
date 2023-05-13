@@ -39,11 +39,15 @@
 @stop
 
 @section('css')
-  {{-- <link rel="stylesheet" href="../css/admin_custom.css"> --}}  
+<link rel="stylesheet" media="only screen and (max-width: 768px)" href="../css/celulares.css">
 @stop
 
 @section('js')
   {{-- <script src="{{ asset('js/datatables.js') }}"></script> --}}
+  <script> 
+    if (screen.width >768) 
+    $("#tablaPrincipal").removeClass("table-responsive");
+  </script>  
 
   @if (session('info') == 'registrado' || session('info') == 'actualizado' || session('info') == 'eliminado')
     <script>
