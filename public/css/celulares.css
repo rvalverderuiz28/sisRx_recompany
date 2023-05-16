@@ -6,15 +6,19 @@
 } */
 
   #tablaPrincipal_length{
-      text-align: left; 
-      font-size: 13px;
-    }
+    text-align: left; 
+    font-size: 13px;
+  }
 
-    #tablaPrincipal_filter{
-      text-align: right;
-      font-size: 12px; 
-    }
+  #tablaPrincipal_filter{
+    text-align: right;
+    font-size: 12px; 
+  }
 
-    #tablaPrincipal{
-      font-size: 12px
-    }
+  #tablaPrincipal{
+    font-size: 12px
+  }
+
+  .content-header h1 p{
+    font-size: 10px!important;
+  }

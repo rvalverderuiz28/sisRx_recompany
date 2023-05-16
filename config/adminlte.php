@@ -107,7 +107,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'img' => [
             'path' => 'img/logo.jpeg',
             'alt' => 'AdminLTE Preloader Image',
@@ -150,9 +150,9 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
+    'layout_fixed_footer' => ['xs' => true, 'md' => true, 'xl' => true],
     'layout_dark_mode' => null,
 
     /*
@@ -217,7 +217,7 @@ return [
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
-    'sidebar_nav_accordion' => true,
+    'sidebar_nav_accordion' => false,
     'sidebar_nav_animation_speed' => 300,
 
     /*
@@ -315,102 +315,97 @@ return [
             'route'  => 'dashboard',
             /*'can'   => '#'*/
         ],
-        ['header' => 'MODULOS'],
+        ['header' => 'PROYECTOS'],
         [
-            'text'    => 'PROYECTOS',
-            'icon'    => 'fas fa-fw fa-share',
-            // 'can'   => 'ordenservicio.modulo',
-            'submenu' => [
-                [
-                    'text' => 'Bandeja PROYECTOS',
-                    /*'route'  => '#',*/
-                    /*'can'   => '#'*/
-                    // 'active' => ['orden_servicios*'],
-                    'url'         => '#',
-                ],
-                [
-                    'text' => 'MIS PROYECTOS',
-                    /*'route'  => '#',*/
-                    /*'can'   => '#'*/
-                    // 'active' => ['orden_servicios*'],
-                    'url'         => '#',
-                ],
-                [
-                    'text' => 'PROYECTOS SIN ASIGNAR',
-                    /*'route'  => '#',*/
-                    /*'can'   => '#'*/
-                    // 'active' => ['orden_servicios*'],
-                    'url'         => '#',
-                ],
-                [
-                    'text' => 'PROYECTOS EN EJECUCION',
-                    /*'route'  => '#',*/
-                    /*'can'   => '#'*/
-                    // 'active' => ['orden_servicios*'],
-                    'url'         => '#',
-                ],
-                [
-                    'text' => 'PROYECTOS TERMINADOS',
-                    /*'route'  => '#',*/
-                    /*'can'   => '#'*/
-                    // 'active' => ['orden_servicios*'],
-                    'url'         => '#',
-                ],
-            ],
-        ],
-        [
-            'text'    => 'PERSONAS',
-            'icon'    => 'fas fa-fw fa-share',
-            // 'can'   => 'personas.modulo',
-            'submenu' => [
-                [
-                    'text' => 'Bandeja de CLIENTES',
-                    'route'  => 'clientes.index',
-                    /*'can'   => '#'*/
-                    'active' => ['clientes*'],
-                ],
-                [
-                    'text' => 'Bandeja de USUARIOS',
-                    'route'  => 'users.index',
-                    /*'can'   => '#'*/
-                    'active' => ['users*'],
-                ],
-            ],
-        ],
-        [
-            'text'    => 'MANTENIMIENTOS',
-            'icon'    => 'fas fa-fw fa-share',
+            // 'text'    => 'PROYECTOS',
+            // 'icon'    => 'fas fa-fw fa-share',
+            // // 'can'   => 'ordenservicio.modulo',
+            // 'submenu' => 
+            //     
+            'text' => 'Bandeja PROYECTOS',
+            /*'route'  => '#',*/
             /*'can'   => '#'*/
-            'submenu' => [
-                [
-                    'text' => 'Bandeja de CARGOS',
-                    'route'  => 'roles.index',
-                //     /*'can'   => '#'*/
-                    'active' => ['roles*'],
-                ],
-                [
-                    'text' => 'Bandeja de ESTADOS',
-                    'route'  => 'estados.index',
-                    /*'can'   => '#'*/
-                    'active' => ['estados*'],
-                ],
-            ],
+            // 'active' => ['orden_servicios*'],
+            'url'         => '#',
         ],
         [
-            'text'    => 'REPORTES',
-            'icon'    => 'fas fa-fw fa-share',
+            'text' => 'MIS PROYECTOS',
+            /*'route'  => '#',*/
             /*'can'   => '#'*/
-            'submenu' => [
-                [
-                    'text' => 'Ventas',
-                    // 'route'  => '#',
-                    /*'can'   => '#'*/
-                    //'active' => ['servicios*'],
-                    'url'         => '#',
-                ],
-            ],
+            // 'active' => ['orden_servicios*'],
+            'url'         => '#',
         ],
-        ['header' => 'ACCESOS RAPIDOS'],
+        [
+            'text' => 'PROYECTOS SIN ASIGNAR',
+            /*'route'  => '#',*/
+            /*'can'   => '#'*/
+            // 'active' => ['orden_servicios*'],
+            'url'         => '#',
+        ],
+        [
+            'text' => 'PROYECTOS EN EJECUCION',
+            /*'route'  => '#',*/
+            /*'can'   => '#'*/
+            // 'active' => ['orden_servicios*'],
+            'url'         => '#',
+        ],
+        [
+            'text' => 'PROYECTOS TERMINADOS',
+            /*'route'  => '#',*/
+            /*'can'   => '#'*/
+            // 'active' => ['orden_servicios*'],
+            'url'         => '#',
+        ],
+        ['header' => 'PERSONAS'],
+        [
+            // 'text'    => 'PERSONAS',
+            // 'icon'    => 'fas fa-fw fa-share',
+            // // 'can'   => 'personas.modulo',
+            // 'submenu' => 
+            //     
+            'text' => 'Bandeja de CLIENTES',
+            'route'  => 'clientes.index',
+            /*'can'   => '#'*/
+            'active' => ['clientes*'],
+        ],
+        [
+            'text' => 'Bandeja de USUARIOS',
+            'route'  => 'users.index',
+            /*'can'   => '#'*/
+            'active' => ['users*'],
+        ],
+        ['header' => 'MANTENIMIENTOS'],
+        [
+            // 'text'    => 'MANTENIMIENTOS',
+            // 'icon'    => 'fas fa-fw fa-share',
+            // /*'can'   => '#'*/
+            // 'submenu' => 
+            //     
+            'text' => 'Bandeja de CARGOS',
+            'route'  => 'roles.index',
+        //     /*'can'   => '#'*/
+            'active' => ['roles*'],
+        ],
+        [
+            'text' => 'Bandeja de ESTADOS',
+            'route'  => 'estados.index',
+            /*'can'   => '#'*/
+            'active' => ['estados*'],
+        ],
+        ['header' => 'REPORTES'],
+        [
+            // 'text'    => 'REPORTES',
+            // 'icon'    => 'fas fa-fw fa-share',
+            // /*'can'   => '#'*/
+            // 'submenu' => 
+                
+            'text' => 'Ventas',
+            // 'route'  => '#',
+            /*'can'   => '#'*/
+            //'active' => ['servicios*'],
+            'url'         => '#',
+        ],
+        /*['header' => 'ACCESOS RAPIDOS'],
         [
             'text'       => '1',
             'icon_color' => 'red',
@@ -425,7 +420,7 @@ return [
             'text'       => '3',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ],
+        ],*/
     ],
 
     /*

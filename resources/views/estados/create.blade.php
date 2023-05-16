@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Registro de Usuarios')
+@section('title', 'Registro de Estados')
 
-@section('content_header')
-  <h1>Registrar Usuario</h1>
+@section('content_header')  
+  <h1>Registrar Estado</h1>
 @stop
 
 @section('content')
@@ -155,6 +155,8 @@
 @stop
 
 @section('js')
+
+  
   <script>
     $("#prole_id").change(mostrarValoresRol);
 
