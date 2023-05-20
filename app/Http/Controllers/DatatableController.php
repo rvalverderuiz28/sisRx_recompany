@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Estado;
+use App\Models\Proyecto;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class DatatableController extends Controller
 {
@@ -90,4 +92,66 @@ class DatatableController extends Controller
                     ->make(true);
     }
 
+    public function proyectos(){
+        $proyectos = Proyecto::join('clientes as c', 'proyectos.cliente_id', 'c.id')
+                            ->join('users as u', 'proyectos.user_id', 'u.id')
+                            ->join('estados as e', 'proyectos.estado_id', 'e.id')
+                            ->select('proyectos.id', 
+                                'proyectos.nombre',
+                                'c.razon_social as clientes',
+                                'u.nombre as users',
+                                'e.nombre as condicion',
+                                'proyectos.presupuesto',
+                                DB::raw('DATE_FORMAT(proyectos.fecha_inicio, "%d/%m/%Y") as fecha_inicio'),
+                                DB::raw('DATE_FORMAT(proyectos.fecha_fin, "%d/%m/%Y") as fecha_fin'),
+                                DB::raw('DATE_FORMAT(proyectos.created_at, "%d/%m/%Y") as fecha_creacion'),
+                                'proyectos.estado')
+                            ->where('proyectos.estado', '1')
+                            ->get();
+
+        //return datatables()->collection($categoria_herramientas)->toJson();
+
+        return Datatables::of($proyectos)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($proyectos){    
+                        $btn = '<a href="" data-target="#modal-show" data-toggle="modal" data-opcion="'.$proyectos->id.'"><button class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</button></a> ';
+                        $btn=$btn.'<a href="'.route('proyectos.edit', $proyectos->id).'" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a> ';
+                        $btn = $btn.'<a href="" data-target="#modal-delete" data-toggle="modal" data-delete="'.$proyectos->id.'"><button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button></a>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+    }
+
+    public function misproyectos(){
+        $proyectos = Proyecto::join('clientes as c', 'proyectos.cliente_id', 'c.id')
+                            ->join('users as u', 'proyectos.user_id', 'u.id')
+                            ->join('estados as e', 'proyectos.estado_id', 'e.id')
+                            ->select('proyectos.id', 
+                                'proyectos.nombre',
+                                'c.razon_social as clientes',
+                                'u.nombre as users',
+                                'e.nombre as condicion',
+                                'proyectos.presupuesto',
+                                DB::raw('DATE_FORMAT(proyectos.fecha_inicio, "%d/%m/%Y") as fecha_inicio'),
+                                DB::raw('DATE_FORMAT(proyectos.fecha_fin, "%d/%m/%Y") as fecha_fin'),
+                                DB::raw('DATE_FORMAT(proyectos.created_at, "%d/%m/%Y") as fecha_creacion'),
+                                'proyectos.estado')
+                            ->where('proyectos.user_id', Auth::user()->id)
+                            ->where('proyectos.estado', '1')
+                            ->get();
+
+        //return datatables()->collection($categoria_herramientas)->toJson();
+
+        return Datatables::of($proyectos)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($proyectos){    
+                        $btn = '<a href="" data-target="#modal-show" data-toggle="modal" data-opcion="'.$proyectos->id.'"><button class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Ver</button></a> ';
+                        $btn=$btn.'<a href="'.route('proyectos.edit', $proyectos->id).'" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Editar</a> ';
+                        $btn = $btn.'<a href="" data-target="#modal-delete" data-toggle="modal" data-delete="'.$proyectos->id.'"><button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</button></a>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+    }
 }

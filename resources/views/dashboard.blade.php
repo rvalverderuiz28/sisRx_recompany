@@ -35,6 +35,31 @@
           chart.draw(data, options);
         }
     </script>
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
 @stop
 
 @section('content')
@@ -78,7 +103,8 @@
     {{-- INDICADORES --}}
     <h3>PORCENTAJE INDICADOR 1</h3>
     <div id="indicador1-PRE-TEST" style="width: 100%; height: 500px;"></div>
-    {{-- <div id="indicador1-PRE-POST" style="width: 100%; height: 500px;"></div>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    {{-- <div id="indicador1-PRE-POST" style="width: 100%; height: 500px;"></div> --}}
     {{-- <div id="indicador1-resultado" style="width: 100%; height: 500px;"></div> --}}
     
     {{--<div id="indicador2-PRE-TEST" style="width: 100%; height: 500px;"></div>

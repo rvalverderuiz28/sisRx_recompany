@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Controllers\EstadosController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -36,8 +37,10 @@ Route::middleware([
         Route::get('datatable/usuarios', 'usuarios')->name('datatable.usuarios'); //GRUPO DE RUTAS PARA CONTROLADORES (RUTA, FUNCION)
         Route::get('datatable/clientes', 'clientes')->name('datatable.clientes');
         Route::get('datatable/estados', 'estados')->name('datatable.estados');
+        Route::get('datatable/proyectos', 'proyectos')->name('datatable.proyectos');
     });
 
+    //ROLES
     Route::resource('roles', RoleController::class)->names('roles');
 
     //USER
@@ -54,4 +57,9 @@ Route::middleware([
     Route::post('estadoDeleteRequest', [EstadosController::class, 'destroyid'])->name('estadoDeleteRequest.post');
     Route::get('estados.showId', [EstadosController::class, 'showId'])->name('estados.showId');
 
+    //PROYECTOS
+    Route::resource('proyectos', ProyectoController::class)->names('proyectos');
+    Route::post('proyectoDeleteRequest', [ProyectoController::class, 'destroyid'])->name('proyectoDeleteRequest.post');
+    Route::get('proyectos.showId', [ProyectoController::class, 'showId'])->name('proyectos.showId');
+    Route::get('proyectos.misproyectos', [ProyectoController::class, 'misproyectos'])->name('proyectos.misproyectos');
 });

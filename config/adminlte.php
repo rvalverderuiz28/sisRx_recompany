@@ -313,7 +313,7 @@ return [
             'text'    => 'DASHBOARD',
             'icon'    => 'fas fa-fw fa-share',
             'route'  => 'dashboard',
-            /*'can'   => '#'*/
+            //'can'   => 'dashboard.modulo'
         ],
         ['header' => 'PROYECTOS'],
         [
@@ -323,17 +323,15 @@ return [
             // 'submenu' => 
             //     
             'text' => 'Bandeja PROYECTOS',
-            /*'route'  => '#',*/
-            /*'can'   => '#'*/
-            // 'active' => ['orden_servicios*'],
-            'url'         => '#',
+            'route'  => 'proyectos.index',
+            //'can'   => 'proyecto.index',
+            'active' => ['proyectos*'],
         ],
         [
             'text' => 'MIS PROYECTOS',
-            /*'route'  => '#',*/
+            'route'  => 'proyectos.misproyectos',
             /*'can'   => '#'*/
             // 'active' => ['orden_servicios*'],
-            'url'         => '#',
         ],
         [
             'text' => 'PROYECTOS SIN ASIGNAR',
@@ -528,26 +526,26 @@ return [
                 ],
             ],
         ],
-        // 'bootstrap-select' => [
-        //     'active' => true,
-        //     'files' => [
-        //         [
-        //             'type' => 'js',
-        //             'asset' => false,
-        //             'location' => '//cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js',
-        //         ],
-        //         [
-        //             'type' => 'js',
-        //             'asset' => false,
-        //             'location' => '//cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js',
-        //         ],
-        //         [
-        //             'type' => 'css',
-        //             'asset' => false,
-        //             'location' => '//cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css',
-        //         ],
-        //     ],
-        // ],
+        'bootstrap-select' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css',
+                ],
+            ],
+        ],
     ],
 
     /*
