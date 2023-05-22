@@ -32,8 +32,12 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     
+    Route::get('/videoconferencia', function () {
+        return view('videoconferencia');
+    })->name('videoconferencia');
+
     //GRUPO DE RUTAS PARA DATATABLES
-        Route::controller(DatatableController::class)->group(function(){
+    Route::controller(DatatableController::class)->group(function(){
         Route::get('datatable/usuarios', 'usuarios')->name('datatable.usuarios'); //GRUPO DE RUTAS PARA CONTROLADORES (RUTA, FUNCION)
         Route::get('datatable/clientes', 'clientes')->name('datatable.clientes');
         Route::get('datatable/estados', 'estados')->name('datatable.estados');
