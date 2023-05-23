@@ -22,3 +22,19 @@
   .content-header h1 p{
     font-size: 10px!important;
   }
+
+  #div-img{
+    width: 33.3%!important;
+  }
+
+  #div-user{
+    width: 33.3%!important;
+  }
+
+  #div-status{
+    width: 33.3%!important;
+  }
+
+  #foto_perfil{
+    width: 50px;
+  }

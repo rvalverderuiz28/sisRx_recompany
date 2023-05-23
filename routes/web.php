@@ -6,6 +6,7 @@ use App\Http\Controllers\EstadosController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoconferenciaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,10 +32,6 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    
-    Route::get('/videoconferencia', function () {
-        return view('videoconferencia');
-    })->name('videoconferencia');
 
     //GRUPO DE RUTAS PARA DATATABLES
     Route::controller(DatatableController::class)->group(function(){
@@ -71,4 +68,7 @@ Route::middleware([
     Route::get('proyectos.misproyectos', [ProyectoController::class, 'misproyectos'])->name('proyectos.misproyectos');
     Route::get('proyectos.proyectosejecucion', [ProyectoController::class, 'proyectosejecucion'])->name('proyectos.proyectosejecucion');
     Route::get('proyectos.proyectosterminados', [ProyectoController::class, 'proyectosterminados'])->name('proyectos.proyectosterminados');
+
+    //VIDEOCONFERENCIA
+    Route::resource('videoconferencias', VideoconferenciaController::class)->names('videoconferencias');
 });

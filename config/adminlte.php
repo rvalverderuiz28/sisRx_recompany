@@ -355,6 +355,13 @@ return [
             'can'   => 'usuarios.index',
             'active' => ['users*'],
         ],
+        ['header' => 'VIDEOCONFERENCIA',
+        ],
+        [    
+            'text' => 'Sala de espera',
+            'icon' => 'fas fa-check-circle',
+            'route'  => 'videoconferencias.index',
+        ],
         ['header' => 'MANTENIMIENTOS',
             'can'   => 'mantenimientos.modulo',
         ],
