@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Lista de Estados')
+@section('title', 'Proyectos en ejecucion')
 
 @section('content_header')
-  <h1>Lista de ESTADOS
-    {{-- @can('users.create') --}}
-      <a href="" data-target="#modal-add" data-toggle="modal" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</a>
-    {{-- @endcan --}}
+  <h1>Lista de los PROYECTOS EN EJECUCIÓN
+    @can('proyecto.create') 
+      <a href="{{ route('proyectos.create') }}" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</a>
+      @endcan
   </h1>
 @stop
 
@@ -17,16 +17,21 @@
         <thead>
           <tr>
             <th scope="col">CODIGO</th>
-            <th scope="col">ESTADO</th>
-            <th scope="col">DESCRIPCION</th>
+            <th scope="col">PROYECTO</th>
+            <th scope="col">CLIENTE</th>
+            <th scope="col">ENCARGADO</th>
+            <th scope="col">PRESUPUESTO</th>
+            <th scope="col">FECHA DE INICIO</th>
+            <th scope="col">FECHA DE FIN</th>
+            <!-- <th scope="col">CONDICION</th> -->
             <th scope="col">ESTADO</th>
             <th scope="col">ACCIONES</th>
           </tr>
         </thead>
       </table>
-      @include('estados.modal.desactivar')
-      @include('estados.modal.add')
-      @include('estados.modal.show')
+      @include('proyectos.modal.desactivar')
+      @include('proyectos.modal.add')
+      @include('proyectos.modal.show')
     </div>
   </div>
 @stop
@@ -68,15 +73,15 @@
         //console.log(idunico);
         $("#hiddenIDdelete").val(idunico);
         if(idunico<10){
-          idunico = 'EST0000'+idunico;
+          idunico = 'PROY0000'+idunico;
         }else if(idunico<100){
-          idunico = 'EST000'+idunico;
+          idunico = 'PROY000'+idunico;
         }else if(idunico<1000){
-          idunico = 'EST00'+idunico;
+          idunico = 'PROY00'+idunico;
         }else if(idunico<10000){
-          idunico = 'EST0'+idunico;
+          idunico = 'PROY0'+idunico;
         }else{
-          idunico = 'EST'+idunico;
+          idunico = 'PROY'+idunico;
         }
 
         $(".textcode").html(idunico);
@@ -90,38 +95,43 @@
         searching: true,//buscar
         //bDestroy: true,//agregado para evitar adventencia de creacion          
         "order": [[ 0, "desc" ]],
-        ajax: "{{ route('datatable.estados') }}",
+        ajax: "{{ route('datatable.proyectosejecucion') }}",
         columns: [
             { data: 'id', name: 'id',//ID
                 render: function ( data, type, row, meta ) {             
                   if(row.id<10){
-                    return 'EST0000'+row.id;
+                    return 'PROY0000'+row.id;
                   }else if(row.id<100){
-                    return 'EST000'+row.id;
+                    return 'PROY000'+row.id;
                   }else if(row.id<1000){
-                    return 'EST00'+row.id;
+                    return 'PROY00'+row.id;
                   }else if(row.id<10000){
-                    return 'EST0'+row.id;
+                    return 'PROY0'+row.id;
                   }else{
-                    return 'EST'+row.id;
+                    return 'PROY'+row.id;
                   } 
                 }
             },
-            { data: 'nombre', name: 'nombre' },//NOMBRE DE ESTADO
-            { data: 'descripcion', name: 'descripcion' },//DESCRIPCION DE ESTADO         
-            { data: 'estado', name: 'estado',//ESTADO   
-              render: function ( data, type, row, meta ) {
-                if(row.estado==null){
-                  return '';
-                }else{
-                  if(row.estado==1){
-                    return '<span class="badge badge-success">Activo</span>'
-                  }else{
-                    return '<span class="badge badge-danger">Anulado</span>';
-                  }
-                }
-              }
-            },
+            { data: 'nombre', name: 'nombre' },//NOMBRE DE PROYECTO
+            { data: 'clientes', name: 'clientes' },//CLIENTES
+            { data: 'users', name: 'users' },//USUARIO ASIGNADO
+            { data: 'presupuesto', name: 'presupuesto' },//PRESUPUESTO 
+            { data: 'fecha_inicio', name: 'fecha_inicio' },//FECHA DE INICIO 
+            { data: 'fecha_fin', name: 'fecha_fin' },//FECHA DE FIN
+            { data: 'condicion', name: 'condicion' },//CONDICION - IDENTIDAD ESTADO
+            // { data: 'estado', name: 'estado',//ESTADO   
+            //   render: function ( data, type, row, meta ) {
+            //     if(row.estado==null){
+            //       return '';
+            //     }else{
+            //       if(row.estado==1){
+            //         return '<span class="badge badge-success">Activo</span>'
+            //       }else{
+            //         return '<span class="badge badge-danger">Anulado</span>';
+            //       }
+            //     }
+            //   }
+            // },
             { data: 'action', name: 'action', orderable: false, searchable: false},//BOTONES
         ],
         language: {
@@ -167,7 +177,7 @@
       console.log(idunico);
 
         $.ajax({
-          url: "{{ route('estados.showId') }}?estado_id=" + idunico,
+          url: "{{ route('proyectos.showId') }}?proyecto_id=" + idunico,
           method: 'GET',
           dataType:'JSON',
           success: function(data) {
@@ -175,97 +185,58 @@
             let codigo='';
             if(result['id']<10)
             {
-              codigo='EST000'+result['id'];
+              codigo='PROY000'+result['id'];
             }else if(result['id']<100)
             {
-              codigo='EST00'+result['id'];
+              codigo='PROY00'+result['id'];
             }else if(result['id']<1000)
             {
-              codigo='EST0'+result['id'];
+              codigo='PROY0'+result['id'];
             }else if(result['id']<10000)
             {
-              codigo='EST'+result['id'];
+              codigo='PROY'+result['id'];
             }
             $(".textcode").html(codigo);
-            $("#nombre").val(result['nombre']);
             $(".nombre").html(result['nombre']);
-            $("#descripcion").val(result['descripcion']);
-            $(".descripcion").html(result['descripcion']);
-            $("#hiddenId").val(result['nombre']);
-            $("#hiddenId2").val(result['descripcion']);
+            $(".cliente").html(result['clientes']);
+            $(".user").html(result['users']);
+            $(".presupuesto").html("S/"+result['presupuesto']);
+            $(".fecha_inicio").html(result['fecha_inicio']);
+            $(".fecha_fin").html(result['fecha_fin']);
+            $(".condicion").html(result['condicion']);
           }
         });
       });
     });
   </script>
 
-  <script>
-    function clickformdelete()
-    {
-      console.log("action delete action")
-      var formData = $("#formdelete").serialize();
-      console.log(formData);
-      $.ajax({
-        type:'POST',
-        url:"{{ route('estadoDeleteRequest.post') }}",
-        data:formData,
-      }).done(function (data) {
-        $("#modal-delete").modal("hide");
-        //resetearcamposdelete();
-        alertaEstadoDelete();       
-        $('#tablaPrincipal').DataTable().ajax.reload();      
-      });
-    }
-  </script>
-
-  <script>
-    function alertaEstadoDelete(){
-      Swal.fire(
-          'Estado ELIMINADO correctamente',
-          '',
-          'success'
-      )
-    }
-  </script>
-
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <script>
-    //VALIDAR CAMPOS ANTES DE ENVIAR
-    document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("formulario-add").addEventListener('submit', validarFormulario); 
+<script>
+  function clickformdelete()
+  {
+    console.log("action delete action")
+    var formData = $("#formdelete").serialize();
+    console.log(formData);
+    $.ajax({
+      type:'POST',
+      url:"{{ route('proyectoDeleteRequest.post') }}",
+      data:formData,
+    }).done(function (data) {
+      $("#modal-delete").modal("hide");
+      //resetearcamposdelete();
+      alertaEstadoDelete();       
+      $('#tablaPrincipal').DataTable().ajax.reload();      
     });
+  }
+</script>
 
-    function validarFormulario(evento) {
-      evento.preventDefault();
-      var nombre = document.getElementById('nombre').value;
-      var descripcion = document.getElementById('descripcion').value;
-      if (nombre == '' || nombre == ' ') {
-          Swal.fire(
-            'Error',
-            'Ingrese nombre del estado',
-            'warning'
-          )
-        }
-        else if (descripcion == '' || descripcion == ' ') {
-          Swal.fire({
-                icon: 'warning',
-                title: 'No estás registrando descripción ¿Estás seguro?',
-                text: "Campo vacío",            
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, guardar!'
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.submit();
-                }
-              })
-        }
-        else {
-          this.submit();
-        }      
-    }
-  </script>
+<script>
+  function alertaEstadoDelete(){
+    Swal.fire(
+        'Proyecto ELIMINADO correctamente',
+        '',
+        'success'
+    )
+  }
+</script>
   
 @stop

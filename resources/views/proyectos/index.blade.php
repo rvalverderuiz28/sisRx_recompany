@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Lista de Proyectos')
+@section('title', 'Proyectos')
 
 @section('content_header')
-  <h1>Lista de PROYECTOS
+  <h1>Lista de todos los PROYECTOS
     @can('proyecto.create') @endcan
       <!-- <a href="" data-target="#modal-add" data-toggle="modal" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</a> -->
       <a href="{{ route('proyectos.create') }}" class="btn btn-info"><i class="fas fa-plus-circle"></i> Agregar</a>

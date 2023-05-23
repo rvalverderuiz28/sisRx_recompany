@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Registro de Usuarios')
+@section('title', 'Actualizar Usuario')
 
 @section('content_header')
-  <h1>Actualizar Usuario</h1>
+  <h1>Actualización de Usuario</h1>
 @stop
 
 @section('content')
@@ -33,83 +33,76 @@
             <small class="text-danger">{{ $message }}</small>
           @enderror
         </div>
-        <div class="form-group col-lg-3">
-          {!! Form::label('role_id', 'Rol actual') !!}
-          {!! Form::text('rol', null, ['class' => 'form-control', 'placeholder' => 'Ingrese nombres completos', 'disabled']) !!}
-        </div>
-        <div class="form-group col-lg-3">
-          {!! Form::label('role_id', 'Nuevo Rol') !!}
-          <select name="prole_id" id="prole_id" class="form-control">
-            <option value=" ">----SELECCIONE----</option>
-            @foreach ($roles as $role)
-              <option value="{{ $role->id }}_{{ $role->name }}">{{ $role->name }}</option>
-            @endforeach
-          </select>
-          @error('prole_id')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-          {!! Form::hidden('role_id', null, ['id' => 'role_id']) !!}
-          {!! Form::hidden('role_name', null, ['id' => 'role_name']) !!}
-        </div>
-        <div class="form-group col-lg-12">
-          {!! Form::label('direccion', 'Dirección') !!}
-          {!! Form::text('direccion', null, ['class' => 'form-control', 'id' => 'direccion', 'placeholder' => 'Ingrese dirección']) !!}
-          @error('direccion')
+        <div class="form-group col-lg-2">
+          {!! Form::label('role_id', 'Rol - cargo') !!}
+          {!! Form::select('role_id', $roles, $user->rol_id, ['class' => 'border form-control border-secondary selectpicker', 'data-live-search' => 'true', 'id' => 'role_id', 'placeholder' => '---- SELECCIONE ----']) !!}
+          @error('role_id')
             <small class="text-danger">{{ $message }}</small>
           @enderror
         </div>
-        <div class="form-group col-lg-12">
-          {!! Form::label('dni', 'DNI') !!}
-          {!! Form::text('dni', null, ['class' => 'form-control', 'id' => 'dni', 'placeholder' => 'Ingrese número de DNI']) !!}
-          @error('dni')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-12">
-          {!! Form::label('sexo', 'Sexo') !!}
-          {{-- {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Ingrese nombres completos']) !!} --}}
-          {!! Form::select('sexo', $sexos, $user->sexo, ['class' => 'form-control', 'id' => 'sexo', 'placeholder' => '---- SELECCIONE ----']) !!}
-          @error('sexo')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        
-        <div class="form-group col-lg-12">
-          {!! Form::label('celular', 'Celular personal') !!}
-          {!! Form::number('celular', null, ['class' => 'form-control', 'id' => 'celular', 'min' =>'0', 'max' => '999999999', 'maxlength' => '9', 'oninput' => 'maxLengthCheck(this)', 'placeholder' => 'Ingrese número celular']) !!}
-          @error('celular')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-12">
-          {!! Form::label('fecha_contratacion', 'Fecha de contratación') !!}
-          {!! Form::date('fecha_contratacion', null, ['class' => 'form-control', 'id' => 'fecha_contratacion', 'placeholder' => 'Ingrese fecha de contratación']) !!}
-          @error('fecha_contratacion')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-12">
-          {!! Form::label('fecha_nacimiento', 'Fecha de nacimiento') !!}
-          {!! Form::date('fecha_nacimiento', null, ['class' => 'form-control', 'id' => 'fecha_nacimiento', 'placeholder' => 'Ingrese fecha de nacimiento']) !!}
-          @error('fecha_nacimiento')
-            <small class="text-danger">{{ $message }}</small>
-          @enderror
-        </div>
-        <div class="form-group col-lg-12 border rounded card-body border-secondary" style="text-align: center">
-          <h4 style="text-align: center;" class="mb-3"><b>FOTO DE PERFIL</b></h4>
-          <div class="form-row">
-            <div class="form-group col-lg-6" style="margin-top: 5%">
-              {!! Form::label('imagen', 'Seleccione') !!}
-              @csrf
-              {!! Form::file('imagen', ['class' => 'form-control-file', 'accept' => 'image/*']) !!}
+        <div class="form-group col-lg-6">
+          <div class="form-row"> 
+            <div class="form-group col-lg-12">
+              {!! Form::label('direccion', 'Dirección') !!}
+              {!! Form::text('direccion', null, ['class' => 'form-control', 'id' => 'direccion', 'placeholder' => 'Ingrese dirección']) !!}
+              @error('direccion')
+                <small class="text-danger">{{ $message }}</small>
+              @enderror
             </div>
-            <div class="form-group col-lg-6">
-              <div class="image-wrapper">
-                <img id="picture" src="{{ asset('storage/users/'. $user->profile_photo_path ) }}" alt="Imagen de perfil" height="300px" width="300px">
-              </div>
+            <div class="form-group col-lg-12">
+              {!! Form::label('dni', 'DNI') !!}
+              {!! Form::number('dni', null, ['class' => 'form-control', 'id' => 'dni', 'min' =>'0', 'max' => '99999999', 'maxlength' => '8', 'oninput' => 'maxLengthCheck(this)', 'placeholder' => 'Ingrese número de DNI']) !!}
+              @error('dni')
+                <small class="text-danger">{{ $message }}</small>
+              @enderror
+            </div>
+            <div class="form-group col-lg-12">
+              {!! Form::label('sexo', 'Sexo') !!}
+              {!! Form::select('sexo', $sexos, $user->sexo, ['class' => 'form-control', 'id' => 'sexo', 'placeholder' => '---- SELECCIONE ----']) !!}
+              @error('sexo')
+                <small class="text-danger">{{ $message }}</small>
+              @enderror
+            </div>            
+            <div class="form-group col-lg-12">
+              {!! Form::label('celular', 'Celular personal') !!}
+              {!! Form::number('celular', null, ['class' => 'form-control', 'id' => 'celular', 'min' =>'0', 'max' => '999999999', 'maxlength' => '9', 'oninput' => 'maxLengthCheck(this)', 'placeholder' => 'Ingrese número celular']) !!}
+              @error('celular')
+                <small class="text-danger">{{ $message }}</small>
+              @enderror
+            </div>
+            <div class="form-group col-lg-12">
+              {!! Form::label('fecha_contratacion', 'Fecha de contratación') !!}
+              {!! Form::date('fecha_contratacion', null, ['class' => 'form-control', 'id' => 'fecha_contratacion', 'placeholder' => 'Ingrese fecha de contratación']) !!}
+              @error('fecha_contratacion')
+                <small class="text-danger">{{ $message }}</small>
+              @enderror
+            </div>
+            <div class="form-group col-lg-12">
+              {!! Form::label('fecha_nacimiento', 'Fecha de nacimiento') !!}
+              {!! Form::date('fecha_nacimiento', null, ['class' => 'form-control', 'id' => 'fecha_nacimiento', 'placeholder' => 'Ingrese fecha de nacimiento']) !!}
+              @error('fecha_nacimiento')
+                <small class="text-danger">{{ $message }}</small>
+              @enderror
             </div>
           </div>
         </div>
+
+        <div class="form-group col-lg-6 border rounded card-body border-secondary" style="text-align: center">
+          <h4 style="text-align: center;" class="mb-3"><b>FOTO DE PERFIL</b></h4><br>
+          <div class="form-row">            
+            <div class="form-group col-lg-12">
+              <div class="image-wrapper">
+                <img id="picture" src="{{ asset('storage/users/'. $user->profile_photo_path) }}" alt="Imagen de perfil" height="300px" width="300px">
+              </div>
+            </div>
+            <div class="form-group col-lg-12" style="margin-top: 5%">
+              {!! Form::label('imagen', 'Seleccione') !!}
+              @csrf
+              {!! Form::file('imagen', ['class' => 'form-control-file', 'accept' => 'image/*']) !!}
+            </div><br>
+          </div>
+        </div>
+
       </div>
     </div>
     <div class="card-footer">
@@ -122,24 +115,16 @@
 @stop
 
 @section('js')
-<script>
-  $("#prole_id").change(mostrarValoresRol);
 
-//MOSTRAR VALORES
-  function mostrarValoresRol() {
-    datosRol = document.getElementById('prole_id').value.split('_');
-    $("#role_id").val(datosRol[0]);
-    $("#role_name").val(datosRol[1]);
-  }
+  <script>
+    //VALIDAR LARGO DE CAMPO NUMERICO
+    function maxLengthCheck(object)
+    {
+      if (object.value.length > object.maxLength)
+        object.value = object.value.slice(0, object.maxLength)
+    }
 
-//VALIDAR LARGO DE CAMPO NUMERICO
-  function maxLengthCheck(object)
-  {
-    if (object.value.length > object.maxLength)
-      object.value = object.value.slice(0, object.maxLength)
-  }
-
-  //CAMBIAR IMAGEN
+    //CAMBIAR IMAGEN
     document.getElementById("imagen").addEventListener('change', cambiarImagen);
 
     function cambiarImagen(event){
@@ -153,7 +138,7 @@
         reader.readAsDataURL(file);
     }
 
-  //VALIDAR CAMPOS ANTES DE ENVIAR
+    //VALIDAR CAMPOS ANTES DE ENVIAR
     document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("formulario").addEventListener('submit', validarFormulario); 
     });
@@ -163,54 +148,52 @@
       var nombre = document.getElementById('nombre').value;
       var apellido_paterno = document.getElementById('apellido_paterno').value;
       var apellido_materno = document.getElementById('apellido_materno').value;
+      var role_id = document.getElementById('role_id').value;
       var direccion = document.getElementById('direccion').value;
       var dni = document.getElementById('dni').value;
       var celular = document.getElementById('celular').value;
-      var sexo = document.getElementById('sexo').value;
-      var prole_id = document.getElementById('prole_id').value;
-      var role_id = document.getElementById('role_id').value;
-      var role_name = document.getElementById('role_name').value;
+      var sexo = document.getElementById('sexo').value;      
       var fecha_contratacion = document.getElementById('fecha_contratacion').value;
       var fecha_nacimiento = document.getElementById('fecha_nacimiento').value;
       if (nombre == '' || nombre == ' ') {
           Swal.fire(
             'Error',
-            'Ingrese nombre del usuario a registrar',
+            'Ingrese nombre del usuario a actualizar',
             'warning'
           )
         }
         else if (apellido_paterno == '' || apellido_paterno == ' ') {
           Swal.fire(
             'Error',
-            'Ingrese el apellido paterno del usuario a registrar',
+            'Ingrese el apellido paterno del usuario a actualizar',
             'warning'
           )
         }
         else if (apellido_materno == '' || apellido_materno == ' ') {
           Swal.fire(
             'Error',
-            'Ingrese el apellido materno del usuario a registrar',
+            'Ingrese el apellido materno del usuario a actualizar',
+            'warning'
+          )
+        }
+        else if (role_id == '' || role_id == ' ') {
+          Swal.fire(
+            'Error',
+            'Seleccione un rol-cargo para el usuario',
             'warning'
           )
         }
         else if (direccion == '' || direccion == ' ') {
           Swal.fire(
             'Error',
-            'Ingrese la dirección del usuario a registrar',
+            'Ingrese la direccion del usuario a actualizar',
             'warning'
           )
-        }
+        }        
         else if (dni.length != 8) {
           Swal.fire(
             'Error',
             'El número de DNI del usuario debe tener 8 dígitos',
-            'warning'
-          )
-        }
-        else if (celular.length != 9){
-          Swal.fire(
-            'Error',
-            'Número celular del usuario debe tener 9 dígitos',
             'warning'
           )
         }
@@ -221,6 +204,13 @@
             'warning'
           )
         }
+        else if (celular.length != 9){
+          Swal.fire(
+            'Error',
+            'Número celular del usuario debe tener 9 dígitos',
+            'warning'
+          )
+        }        
         else if (fecha_contratacion == ''){
           Swal.fire(
             'Error',

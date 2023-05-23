@@ -23,8 +23,13 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::get();
-        return view('usuarios.create', compact('roles'));
+        $roles = Role::pluck('name', 'id');
+        $sexos = [
+            "MASCULINO" => 'MASCULINO',
+            "FEMENINO" => 'FEMENINO'
+        ];
+
+        return view('usuarios.create', compact('roles', 'sexos'));
     }
 
     /**
@@ -35,7 +40,7 @@ class UserController extends Controller
         $request->validate([            
             'nombre' => 'required',
             'email' => 'required|unique:users|email',
-            'prole_id' => 'required',
+            'role_id' => 'required',
             'password' => [
                 'required',
                 'min:5', // debe tener al menos 6 caracteres
@@ -57,6 +62,8 @@ class UserController extends Controller
             $file_name = 'logo.jpeg';
         }
         
+        $rol = Role::where('id', $request->role_id)->first();
+
         $user = User::create([
             'nombre' => $request->nombre,
             'apellido_paterno' => $request->apellido_paterno,
@@ -65,7 +72,8 @@ class UserController extends Controller
             'dni' => $request->dni,
             'celular' => $request->celular,
             'sexo' => $request->sexo,
-            'rol' => $request->role_name,
+            'rol' => $rol->name,
+            'rol_id' => $rol->id,
             'fecha_contratacion' => $request->fecha_contratacion,
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'email' => $request->email,
@@ -82,9 +90,14 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        $sexos = [
+            "MASCULINO" => 'MASCULINO',
+            "FEMENINO" => 'FEMENINO'
+        ];
+        
+        return view('usuarios.show', compact('user'));
     }
 
     /**
@@ -92,7 +105,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::get();
+        $roles = Role::pluck('name', 'id');
         $sexos = [
             "MASCULINO" => 'MASCULINO',
             "FEMENINO" => 'FEMENINO'
@@ -105,9 +118,9 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, User $user)
-    {
+    { //return $request->all();
         $request->validate([
-            'name' => 'required'
+            'nombre' => 'required'
         ]);
 
         $files = $request->file('imagen');
@@ -134,13 +147,17 @@ class UserController extends Controller
             'profile_photo_path' => $file_name,
         ]);
 
-        if ($request->prole_id != "" && $request->role_name != "") {
-            $user->roles()->sync($request->role_id);
-
+            // if ($request->prole_id != "" && $request->role_name != "") {
+            $rol = Role::where('id', $request->role_id)->first();
+            
+            $user->roles()->sync($rol->id);
+            
+            // return $rol;
             $user->update([
-                'rol' => $request->role_name
+                'rol' => $rol->name,
+                'rol_id' => $rol->id
             ]);
-        }
+        // }
 
         return redirect()->route('users.index')->with('info', 'actualizado');
     }

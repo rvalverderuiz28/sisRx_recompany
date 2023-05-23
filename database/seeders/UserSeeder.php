@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         User::create([
             'nombre' => 'User',
             'apellido_paterno' => 'demo',
-            'apellido_materno' => '',
+            'apellido_materno' => 'prueba',
             'direccion' => 'casa',
             'dni' => '99999999',
             'sexo' => 'MASCULINO',
@@ -26,12 +26,13 @@ class UserSeeder extends Seeder
             'fecha_nacimiento' => '1992-02-28',
             'email' => 'correo@correo.com',
             'rol' => 'Administrador',
+            'rol_id' => '1',
             'email_verified_at' => now(),
             'password' => bcrypt('123456789'), // password
             'remember_token' => Str::random(10),
             'celular' => '909909909',
             'profile_photo_path' => 'logo.jpeg', 
             'estado' => '1',
-        ]);//->assignRole('Administrador');
+        ])->assignRole('Administrador');
     }
 }

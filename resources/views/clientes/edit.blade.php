@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Actualizar de Clientes')
+@section('title', 'Actualizar Clientes')
 
 @section('content_header')
-  <h1>Actualizar Cliente</h1>
+  <h1>Actualización de Clientes</h1>
 @stop
 
 @section('content')
@@ -24,109 +24,89 @@
 
 @section('js')
   <script>
-    $("#prole_id").change(mostrarValores);
-
-    function mostrarValores() {
-      datosArticulo = document.getElementById('prole_id').value.split('_');
-      $("#role_id").val(datosArticulo[0]);
-      $("#role_name").val(datosArticulo[1]);
-    }
-
   //VALIDAR CAMPO CELULAR
     function maxLengthCheck(object)
     {
       if (object.value.length > object.maxLength)
         object.value = object.value.slice(0, object.maxLength)
     }
-  //CAMBIAR IMAGEN
-    document.getElementById("imagen").addEventListener('change', cambiarImagen);
-
-    function cambiarImagen(event){
-        var file = event.target.files[0];
-
-        var reader = new FileReader();
-        reader.onload = (event) => {
-            document.getElementById("picture").setAttribute('src', event.target.result);
-        };
-
-        reader.readAsDataURL(file);
-    }
 
   //VALIDAR CAMPOS ANTES DE ENVIAR
-    document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("formulario").addEventListener('submit', validarFormulario); 
     });
 
     function validarFormulario(evento) {
       evento.preventDefault();
-      var name = document.getElementById('name').value;
-      var identificador = document.getElementById('identificador').value;
-      var celular = document.getElementById('celular').value;
-      var provincia = document.getElementById('provincia').value;
-      var distrito = document.getElementById('distrito').value;
+      var tipo_documento = document.getElementById('tipo_documento').value;
+      var numero_documento = document.getElementById('numero_documento').value;
+      var razon_social = document.getElementById('razon_social').value;
       var direccion = document.getElementById('direccion').value;
-      var referencia = document.getElementById('referencia').value;
-      var email = document.getElementById('email').value;
-      if (name == '') {
+      var contacto = document.getElementById('contacto').value;
+      var celular = document.getElementById('celular').value;
+      var correo = document.getElementById('correo').value;
+
+      if (tipo_documento == '' || tipo_documento == ' ') {
           Swal.fire(
             'Error',
-            'Ingrese nombre del usuario a registrar',
+            'Seleccione un tipo de documento',
             'warning'
           )
         }
-        else if (identificador == '') {
+        else if (numero_documento == '' || numero_documento == ' ') {
           Swal.fire(
             'Error',
-            'Agregue un identificador para este usuario',
+            'Ingrese número de documento del nuevo cliente',
             'warning'
           )
         }
-        else if (celular == ''){
+        else if (tipo_documento == 'DNI' && numero_documento.length != 8 ) {
           Swal.fire(
             'Error',
-            'Agregue número celular para este usuario',
+            'Los DNI´s deben tener 8 dígitos',
+            'warning'
+          )
+        }
+        else if (tipo_documento == 'RUC' && numero_documento.length != 11 ) {
+          Swal.fire(
+            'Error',
+            'Los RUC´s deben tener 11 dígitos',
+            'warning'
+          )
+        }
+        else if (razon_social == '' || razon_social == ' ') {
+          Swal.fire(
+            'Error',
+            'Ingrese razón social del cliente a registrar',
+            'warning'
+          )
+        }
+        else if (direccion == '' || direccion == ' ') {
+          Swal.fire(
+            'Error',
+            'Ingrese la dirección del cliente a registrar',
+            'warning'
+          )
+        }
+        else if (contacto == '' || contacto == ' ') {
+          Swal.fire(
+            'Error',
+            'Ingrese el contacto del cliente a registrar',
             'warning'
           )
         }
         else if (celular.length != 9){
           Swal.fire(
             'Error',
-            'Número celular del usuario debe tener 9 dígitos',
+            'Número celular del cliente debe tener 9 dígitos',
             'warning'
           )
         }
-        else if (provincia == ''){
+        
+        else if (correo == '' || correo == ' '){
           Swal.fire(
             'Error',
-            'Registre la provincia del usuario',
-            'warning'
-          )
-        }
-        else if (distrito == ''){
-          Swal.fire(
-            'Error',
-            'Registre el distrito del usuario',
-            'warning'
-          )
-        }
-        else if (direccion == ''){
-          Swal.fire(
-            'Error',
-            'Registre la dirección del usuario',
-            'warning'
-          )
-        }
-        else if (referencia == ''){
-          Swal.fire(
-            'Error',
-            'Registre la referencia del usuario',
-            'warning'
-          )
-        }
-        else if (email == ''){
-          Swal.fire(
-            'Error',
-            'Registre el email del usuario',
+            'Registre el email del cliente a registrar',
             'warning'
           )
         }

@@ -23,6 +23,16 @@ class ProyectoController extends Controller
     {
         return view('proyectos.misproyectos');
     }
+
+    public function proyectosejecucion()
+    {
+        return view('proyectos.proyectosejecucion');
+    }
+
+    public function proyectosterminados()
+    {
+        return view('proyectos.proyectosterminados');
+    }
     /**
      * Show the form for creating a new resource.
      */

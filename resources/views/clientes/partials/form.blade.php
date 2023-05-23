@@ -1,15 +1,13 @@
 <div class="form-row">   
   <div class="form-group col-lg-6">
     {!! Form::label('tipo_documento', 'Tipo de documento') !!}
-    {{-- {!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Ingrese nombres completos']) !!} --}}
-    {!! Form::select('tipo_documento', $tipos, null, ['class' => 'form-control', 'id' => 'tipo_documento', 'placeholder' => '---- SELECCIONE ----']) !!}
+    {!! Form::select('tipo_documento', $tipos, null, ['class' => 'border form-control border-secondary selectpicker', 'data-live-search' => 'true', 'id' => 'tipo_documento', 'placeholder' => '---- SELECCIONE ----']) !!}
     @error('tipo_documento')
       <small class="text-danger">{{ $message }}</small>
     @enderror
   </div>   
   <div class="form-group col-lg-6">
     {!! Form::label('numero_documento', 'Número de documento ') !!}
-    {{-- {!! Form::text('numero_documento', null, ['class' => 'form-control', 'id' => 'numero_documento', 'placeholder' => 'Ingrese número de documento']) !!} --}}
     {!! Form::number('numero_documento', null, ['class' => 'form-control', 'id' => 'numero_documento', 'min' =>'0', 'max' => '99999999999', 'maxlength' => '11', 'oninput' => 'maxLengthCheck(this)', 'placeholder' => 'Ingrese número de documento']) !!}
     @error('numero_documento')
       <small class="text-danger">{{ $message }}</small>

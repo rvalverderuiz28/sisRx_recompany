@@ -38,6 +38,9 @@ Route::middleware([
         Route::get('datatable/clientes', 'clientes')->name('datatable.clientes');
         Route::get('datatable/estados', 'estados')->name('datatable.estados');
         Route::get('datatable/proyectos', 'proyectos')->name('datatable.proyectos');
+        Route::get('datatable/misproyectos', 'misproyectos')->name('datatable.misproyectos');
+        Route::get('datatable/proyectosejecucion', 'proyectosejecucion')->name('datatable.proyectosejecucion');
+        Route::get('datatable/proyectosterminados', 'proyectosterminados')->name('datatable.proyectosterminados');
     });
 
     //ROLES
@@ -62,4 +65,6 @@ Route::middleware([
     Route::post('proyectoDeleteRequest', [ProyectoController::class, 'destroyid'])->name('proyectoDeleteRequest.post');
     Route::get('proyectos.showId', [ProyectoController::class, 'showId'])->name('proyectos.showId');
     Route::get('proyectos.misproyectos', [ProyectoController::class, 'misproyectos'])->name('proyectos.misproyectos');
+    Route::get('proyectos.proyectosejecucion', [ProyectoController::class, 'proyectosejecucion'])->name('proyectos.proyectosejecucion');
+    Route::get('proyectos.proyectosterminados', [ProyectoController::class, 'proyectosterminados'])->name('proyectos.proyectosterminados');
 });

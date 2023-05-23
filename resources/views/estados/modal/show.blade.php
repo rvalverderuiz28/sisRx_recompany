@@ -1,6 +1,6 @@
   <!-- Modal -->
   <div class="modal fade" id="modal-show" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 1000px!important;">
+    <div class="modal-dialog">{{--  style="max-width: 1000px!important;" --}}
       <div class="modal-content">
         <div class="modal-header bg-info">
           <h5 class="modal-title" id="exampleModalLabel">Detalle de estado</h5>
@@ -24,12 +24,12 @@
                       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h5 style="text-align: center"><b>Datos del ESTADO</b></h5>
                       </div>
-                      <div class="form-group col-lg-6">
+                      <div class="form-group col-lg-12">
                         {!! Form::label('nombre', 'Nombre:') !!}
                         {{-- {!! Form::text('hiddenId', null, ['class' => 'form-control', 'id' => 'hiddenId', 'required']) !!} --}}
                         <p class="nombre"></p>
                       </div>               
-                      <div class="form-group col-lg-6">
+                      <div class="form-group col-lg-12">
                         {!! Form::label('descripcion', 'Descripción:') !!}
                         {{-- {!! Form::text('descripcion', null, ['class' => 'form-control', 'id' => 'descripcion', 'required']) !!} --}}
                         <p class="descripcion"></p>

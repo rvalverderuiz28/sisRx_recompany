@@ -36,6 +36,7 @@ class User extends Authenticatable
         'sexo',
         'celular',
         'rol',
+        'rol_id',
         'fecha_contratacion',
         'fecha_nacimiento',
         'email',

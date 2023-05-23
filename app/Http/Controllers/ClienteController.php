@@ -60,7 +60,15 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        return view('clientes.show', compact('cliente'));
+        //return $cliente;
+        $tipos = [
+            "RUC" => 'RUC',
+            "DNI" => 'DNI',
+            "CE" => 'CE',
+            "PASAPORTE" => 'PASAPORTE'
+        ];
+
+        return view('clientes.show', compact('cliente', 'tipos'));
     }
 
     /**

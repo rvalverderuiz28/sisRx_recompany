@@ -291,134 +291,96 @@ return [
 
     'menu' => [
         // Navbar items:
-        // [
-        //     'type'         => 'navbar-search',
-        //     'text'         => 'search',
-        //     'topnav_right' => true,
-        // ],
-        // [
-        //     'type'         => 'fullscreen-widget',
-        //     'topnav_right' => true,
-        // ],
 
         // Sidebar items:
-        // [
-        //     'type' => 'sidebar-menu-search',
-        //     'text' => 'search',
-        // ],
-        /*REVISAR******************************
-            'label'       => 4,
-            'label_color' => 'success'*/
         [
             'text'    => 'DASHBOARD',
-            'icon'    => 'fas fa-fw fa-share',
+            'icon'    => 'fas fa-tachometer-alt',
             'route'  => 'dashboard',
-            //'can'   => 'dashboard.modulo'
+            'can'   => 'dashboard.modulo',
+            'active' => ['dashboard*'],
         ],
-        ['header' => 'PROYECTOS'],
-        [
-            // 'text'    => 'PROYECTOS',
-            // 'icon'    => 'fas fa-fw fa-share',
-            // // 'can'   => 'ordenservicio.modulo',
-            // 'submenu' => 
-            //     
+        ['header' => 'PROYECTOS',
+            'can'   => 'proyecto.modulo',
+        ],
+        [ 
             'text' => 'Bandeja PROYECTOS',
+            'icon' => 'fas fa-check-circle',
             'route'  => 'proyectos.index',
-            //'can'   => 'proyecto.index',
-            'active' => ['proyectos*'],
+            'can'   => 'proyecto.index',
+            'active' => ['proyectos'],
         ],
         [
             'text' => 'MIS PROYECTOS',
+            'icon' => 'fas fa-check-circle',
             'route'  => 'proyectos.misproyectos',
-            /*'can'   => '#'*/
-            // 'active' => ['orden_servicios*'],
+            'can'   => 'proyecto.misproyectos',
+            'active' => ['misproyectos'],
         ],
-        [
-            'text' => 'PROYECTOS SIN ASIGNAR',
-            /*'route'  => '#',*/
-            /*'can'   => '#'*/
-            // 'active' => ['orden_servicios*'],
-            'url'         => '#',
-        ],
+        // [
+        //     'text' => 'PROYECTOS SIN ASIGNAR',
+        //     /*'route'  => '#',*/
+        //     /*'can'   => '#'*/
+        //     // 'active' => ['orden_servicios*'],
+        //     'url'         => '#',
+        // ],
         [
             'text' => 'PROYECTOS EN EJECUCION',
-            /*'route'  => '#',*/
-            /*'can'   => '#'*/
-            // 'active' => ['orden_servicios*'],
-            'url'         => '#',
+            'icon' => 'fas fa-check-circle',
+            'route'  => 'proyectos.proyectosejecucion',
+            'can'   => 'proyecto.proyectosenejecucion',
+            'active' => ['proyectosejecucion*'],
         ],
         [
             'text' => 'PROYECTOS TERMINADOS',
-            /*'route'  => '#',*/
-            /*'can'   => '#'*/
-            // 'active' => ['orden_servicios*'],
-            'url'         => '#',
+            'icon' => 'fas fa-check-circle',
+            'route'  => 'proyectos.proyectosterminados',
+            'can'   => 'proyecto.proyectosterminados',
+            'active' => ['orden_servicios*'],
         ],
-        ['header' => 'PERSONAS'],
-        [
-            // 'text'    => 'PERSONAS',
-            // 'icon'    => 'fas fa-fw fa-share',
-            // // 'can'   => 'personas.modulo',
-            // 'submenu' => 
-            //     
+        ['header' => 'PERSONAS',
+            'can'   => 'personas.modulo',
+        ],
+        [    
             'text' => 'Bandeja de CLIENTES',
+            'icon' => 'fas fa-check-circle',
             'route'  => 'clientes.index',
-            /*'can'   => '#'*/
+            'can'   => 'clientes.index',
             'active' => ['clientes*'],
         ],
         [
             'text' => 'Bandeja de USUARIOS',
+            'icon' => 'fas fa-check-circle',
             'route'  => 'users.index',
-            /*'can'   => '#'*/
+            'can'   => 'usuarios.index',
             'active' => ['users*'],
         ],
-        ['header' => 'MANTENIMIENTOS'],
-        [
-            // 'text'    => 'MANTENIMIENTOS',
-            // 'icon'    => 'fas fa-fw fa-share',
-            // /*'can'   => '#'*/
-            // 'submenu' => 
-            //     
+        ['header' => 'MANTENIMIENTOS',
+            'can'   => 'mantenimientos.modulo',
+        ],
+        [  
             'text' => 'Bandeja de CARGOS',
+            'icon' => 'fas fa-check-circle',
             'route'  => 'roles.index',
-        //     /*'can'   => '#'*/
+            'can'   => 'roles.index',
             'active' => ['roles*'],
         ],
         [
             'text' => 'Bandeja de ESTADOS',
+            'icon' => 'fas fa-check-circle',
             'route'  => 'estados.index',
-            /*'can'   => '#'*/
+            'can'   => 'estados.index',
             'active' => ['estados*'],
         ],
         ['header' => 'REPORTES'],
-        [
-            // 'text'    => 'REPORTES',
-            // 'icon'    => 'fas fa-fw fa-share',
-            // /*'can'   => '#'*/
-            // 'submenu' => 
-                
+        [   
             'text' => 'Ventas',
+            'icon' => 'fas fa-check-circle',
             // 'route'  => '#',
-            /*'can'   => '#'*/
-            //'active' => ['servicios*'],
-            'url'         => '#',
+            'can'   => 'reportes.ventas',
+            'url'   => '#',
+            'active' => ['reportes*'],
         ],
-        /*['header' => 'ACCESOS RAPIDOS'],
-        [
-            'text'       => '1',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => '2',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => '3',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],*/
     ],
 
     /*

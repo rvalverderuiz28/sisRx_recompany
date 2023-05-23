@@ -47,7 +47,7 @@
 
 @section('js')
 
-  <script src="{{ asset('js/datatables.js') }}"></script>
+  {{-- <script src="{{ asset('js/datatables.js') }}"></script> --}}
 
   @if (session('info') == 'registrado' || session('info') == 'actualizado' || session('info') == 'eliminado')
     <script>

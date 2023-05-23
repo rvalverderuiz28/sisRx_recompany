@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Registro de Usuarios')
+@section('title', 'Registro de Cliente')
 
 @section('content_header')
-  <h1>Registrar Usuario</h1>
+  <h1>Registrar nuevo cliente</h1>
 @stop
 
 @section('content')
@@ -59,10 +59,17 @@
             'warning'
           )
         }
-        else if (numero_documento.length >= 11) {
+        else if (tipo_documento == 'DNI' && numero_documento.length != 8 ) {
           Swal.fire(
             'Error',
-            'El número de documento supera los caracteres',
+            'Los DNI´s deben tener 8 dígitos',
+            'warning'
+          )
+        }
+        else if (tipo_documento == 'RUC' && numero_documento.length != 11 ) {
+          Swal.fire(
+            'Error',
+            'Los RUC´s deben tener 11 dígitos',
             'warning'
           )
         }
@@ -76,7 +83,7 @@
         else if (direccion == '' || direccion == ' ') {
           Swal.fire(
             'Error',
-            'Ingrese la dirección del usuario a registrar',
+            'Ingrese la dirección del cliente a registrar',
             'warning'
           )
         }
@@ -90,7 +97,7 @@
         else if (celular.length != 9){
           Swal.fire(
             'Error',
-            'Número celular del usuario debe tener 9 dígitos',
+            'Número celular del cliente debe tener 9 dígitos',
             'warning'
           )
         }
@@ -98,7 +105,7 @@
         else if (correo == '' || correo == ' '){
           Swal.fire(
             'Error',
-            'Registre el email del usuario a registrar',
+            'Registre el email del cliente a registrar',
             'warning'
           )
         }

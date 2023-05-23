@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('celular')->unique();
             $table->string('sexo')->nullable();
             $table->string('rol')->nullable();
+            $table->unsignedBigInteger('rol_id');
             $table->date('fecha_contratacion')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->string('email')->unique();
@@ -32,6 +33,8 @@ return new class extends Migration
             $table->string('estado');
 
             $table->timestamps();
+
+            $table->foreign(['rol_id'])->references(['id'])->on('roles');
         });
     }
 

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Lista de Mis Proyectos')
+@section('title', 'Mis Proyectos')
 
 @section('content_header')
   <h1>Lista de MIS PROYECTOS
@@ -95,7 +95,7 @@
         searching: true,//buscar
         //bDestroy: true,//agregado para evitar adventencia de creacion          
         "order": [[ 0, "desc" ]],
-        ajax: "{{ route('datatable.proyectos') }}",
+        ajax: "{{ route('datatable.misproyectos') }}",
         columns: [
             { data: 'id', name: 'id',//ID
                 render: function ( data, type, row, meta ) {             

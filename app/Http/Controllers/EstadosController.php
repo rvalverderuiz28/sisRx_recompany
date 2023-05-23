@@ -47,22 +47,6 @@ class EstadosController extends Controller
     public function show(Request $request)
     {
         // return view('estados.show', compact('estado'));
-
-        if (!$request->estado_id) {
-            $html='';
-        } else {
-            $data = Estado::select('id', 
-                    'nombre', 
-                    'descripcion'
-                    )
-            ->where('estado','1')
-            ->where('id',$request->estado_id)
-            ->get();
-
-            $html=$data;
-        }
-        return response()->json(['html' => $html]);
-
     }
 
     public function showId(Request $request)

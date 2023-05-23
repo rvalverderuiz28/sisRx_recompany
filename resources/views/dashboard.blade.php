@@ -52,7 +52,7 @@
         ]);
 
         var options = {
-          title: 'My Daily Activities'
+          title: 'Porcentajes'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
