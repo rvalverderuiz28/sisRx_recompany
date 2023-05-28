@@ -71,4 +71,5 @@ Route::middleware([
 
     //VIDEOCONFERENCIA
     Route::resource('videoconferencias', VideoconferenciaController::class)->names('videoconferencias');
+    Route::get('videoconferencias.showId', [VideoconferenciaController::class, 'showId'])->name('videoconferencias.showId');
 });

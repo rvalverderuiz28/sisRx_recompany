@@ -44,6 +44,21 @@ class VideoconferenciaController extends Controller
         //
     }
 
+    public function showId(Request $request)
+    {
+        // return view('estados.show', compact('estado'));
+        if (!$request->user_id) {
+            $html='';
+        } else {
+            $data = User::where('estado','1')
+            ->where('id',$request->user_id)
+            ->get();
+
+            $html=$data;
+        }
+        return response()->json(['html' => $html]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

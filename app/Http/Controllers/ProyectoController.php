@@ -92,7 +92,6 @@ class ProyectoController extends Controller
     public function showId(Request $request)
     {
         // return view('estados.show', compact('estado'));
-
         if (!$request->proyecto_id) {
             $html='';
         } else {
@@ -116,7 +115,6 @@ class ProyectoController extends Controller
             $html=$data;
         }
         return response()->json(['html' => $html]);
-
     }
 
     /**
