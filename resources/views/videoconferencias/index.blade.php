@@ -139,8 +139,9 @@
 
 @section('js')
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-    
+    <!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.1.4/adapter.js" integrity="sha512-r8cn1OoZ21KHc0zmav3+MtQS24AJLAaDdNNWYkOborAznLETtfBKMb6xkpqXnjcH1GmKG9BqPOW9tU/Jzy98kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script> 
         if (screen.width >768) 
         $("#tablaPrincipal").removeClass("table-responsive");
@@ -263,7 +264,8 @@
     function callUser(){
         getCam();
         console.log("boton cam");
-        
+        // Envía el mensaje de llamada al usuario seleccionado
+        conn.send('call', null, sendTo);
     }
 
     conn.onopen = e =>{
@@ -274,16 +276,25 @@
 
     }
     
-    conn.send(type, data, sendTo)
-    {
-        conn.send(JSON.stringify({
-            sendTo: sendTo,
-            type:type,
-            data:data
-        }))
-    }
+    // conn.send(type, data, sendTo)
+    // {
+    //     conn.send(JSON.stringify({
+    //         sendTo: sendTo,
+    //         type:type,
+    //         data:data
+    //     }))
+    // }
 
-    send('is-client-is-ready', null, sendTo);
+    conn.send = function(type, data, sendTo) {
+        conn.send(JSON.stringify({
+        sendTo: sendTo,
+        type: type,
+        data: data
+        }));
+    };
+
+    conn.send('is-client-is-ready', null, sendTo);
+    // send('is-client-is-ready', null, sendTo);
 
     </script>
     <script>
