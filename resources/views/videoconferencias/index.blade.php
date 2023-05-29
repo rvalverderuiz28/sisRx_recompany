@@ -153,7 +153,8 @@
         }
     </script>
     <script>
-    /* $.fn.dataTable.ext.errMode = 'throw'; */
+    let conn; // Declarar la variable conn fuera del alcance del evento $(document).ready
+
     $(document).ready( function () {
       $.ajaxSetup({
           headers: {
@@ -162,7 +163,9 @@
       });
 
       var hiddenID = document.getElementById('hiddenID').value;
-      const conn = new WebSocket('ws://localhost/?token='+hiddenID);
+    //   const conn = new WebSocket('ws://localhost/?token='+hiddenID);
+      conn = new WebSocket('wss://sisrxtecompany.ojoverdeperu.com/?token='+hiddenID);
+        // 
     })
     </script>  
     <script>
