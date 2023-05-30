@@ -18,7 +18,8 @@
                                 <img id="foto_perfil" class="img-fluid rounded select-none" src="{{ asset('storage/users/'. Auth()->user()->profile_photo_path ) }}" alt="FOTO_PERFIL">
                             </div>
                             <div class="col-lg-9" id="div-user">
-                            <input type="text" value="{{ Auth()->user()->id }}" id="hiddenID" name="hiddenID" class="form-control">
+                                <input type="hidden" value="{{ Auth()->user()->id }}" id="hiddenID" name="hiddenID" class="form-control">
+                                <input type="hidden" value="{{ session()->getId() }}" id="sessionID" name="sessionID" class="form-control">
                                 <span class="font-medium select-none">{{ Auth()->user()->nombre }}</span>
                             </div>
                             <div class="col-lg-1" id="div-status">
@@ -153,25 +154,22 @@
         }
     </script>
     <script>
-    let conn; // Declarar la variable conn fuera del alcance del evento $(document).ready
+    //let conn; // Declarar la variable conn fuera del alcance del evento $(document).ready
 
     $(document).ready( function () {
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
-      });
-
-      var hiddenID = document.getElementById('hiddenID').value;
-    //   const conn = new WebSocket('ws://localhost/?token='+hiddenID);
-      conn = new WebSocket('wss://sisrxtecompany.ojoverdeperu.com/?token='+hiddenID);
-        // 
+      });      
     })
     </script>  
     <script>
     function showUser(id){
         var idunico = id//button.data('opcion')//ID
         console.log(idunico);
+        var hiddenID = document.getElementById('hiddenID').value;
+        var sessionID = document.getElementById('sessionID').value;
 
         $.ajax({
             url: "{{ route('videoconferencias.showId') }}?user_id=" + idunico,
@@ -201,105 +199,94 @@
                 changeImage(foto);
 
                 var boton = $('#btn-call');
-                // boton.data('user', idunico);//A NIVEL DE CODIGO
                 boton.attr('data-user', idunico);//LO SOBRE-ESCRIBE
                 console.log(boton.data('user')); 
             }
         });
 
         $("#btn-call").removeClass("d-none");
-        const conn = new WebSocket('ws://localhost/?token='+idunico);
+        let conn;
+        conn = new WebSocket('ws://rxtecompany.test:8001/laravel-websockets/?token='+sessionID);//wss://sisrxtecompany.ojoverdeperu.com/laravel-websockets
+        
+        conn.onopen = function (e) {
+            console.log('Conexión WebSocket establecida.');
+            customSend('is-client-is-ready', null, sendTo);
+        };
+        
+        //Buttons
+        let callBtn = $('#btn-call');
+    
+        let pc;
+        let sendTo = callBtn.data('user');
+        let localStream;
+    
+        //Video elements
+        const localVideo  = document.querySelector("#localVideo");
+        const remoteVideo = document.querySelector("#remoteVideo");
+        
+        //MediaInfo
+        const mediaConst = {
+            video:true
+        }
+    
+        function getConn(){
+            if(!pc){
+                pc = new RTCPeerConnection();
+            }
+        }
+    
+        //ASK FOR MEDIA INPUT
+        async function getCam(){
+            let mediaStream;
+            try {
+                if(!pc){
+                    await getConn();
+                }
+    
+                mediaStream = await navigator.mediaDevices.getUserMedia(mediaConst);
+                localVideo.srcObject = mediaStream;
+                localStream = mediaStream;
+                localStream.getTracks().forEach( track => pc.addTrack(track, localStream) );
+    
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        
+        function callUser(){
+            getCam();
+            console.log("boton cam");
+            // Envía el mensaje de llamada al usuario seleccionado
+            conn.send('call', null, sendTo.toString());
+        }
+    
+        conn.onmessage = e =>{
+
+        }
+    
+        function customSend(type, data, sendTo) {
+            if(conn.readyState === WebSocket.OPEN) { 
+                conn.send(JSON.stringify({
+                    sendTo: sendTo,
+                    type: type,
+                    data: data
+                }));
+            } else {
+              console.log('La conexión WebSocket no está abierta todavía.');
+            }
+        }
+
+        customSend('is-client-is-ready', null, sendTo);
+        
+        // Asignar el evento click al botón 'btn-call'
+        callBtn.on('click', callUser);
     };
     </script>
+   
     <script>
     function changeImage(foto) {
         var image = document.getElementById('foto_user');
         image.src = "storage/users/"+foto; 
         console.log("storage/users/"+foto);       
     }
-    </script>
-    <script>
-
-    //Buttons
-    let callBtn = $('#btn-call');
-
-    let pc;
-    let sendTo = callBtn.data('user');
-    let localStream;
-
-    //Video elements
-    const localVideo  = document.querySelector("#localVideo");
-    const remoteVideo = document.querySelector("#remoteVideo");
-    
-    //MediaInfo
-    const mediaConst = {
-        video:true
-    }
-
-    function getConn(){
-        if(!pc){
-            pc = new RTCPeerConnection();
-        }
-    }
-
-    //ASK FOR MEDIA INPUT
-    async function getCam(){
-        let mediaStream;
-        try {
-            if(!pc){
-                await getConn();
-            }
-
-            mediaStream = await navigator.mediaDevices.getUserMedia(mediaConst);
-            localVideo.srcObject = mediaStream;
-            localStream = mediaStream;
-            localStream.getTracks().forEach( track => pc.addTrack(track, localStream) );
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    // $('#btn-call').on('clic', () => {
-    //     getCam();
-    //     console.log("boton cam");
-    // });
-    function callUser(){
-        getCam();
-        console.log("boton cam");
-        // Envía el mensaje de llamada al usuario seleccionado
-        conn.send('call', null, sendTo);
-    }
-
-    conn.onopen = e =>{
-        console.log('connected to websocket')
-    }
-
-    conn.onmessage = e =>{
-
-    }
-    
-    // conn.send(type, data, sendTo)
-    // {
-    //     conn.send(JSON.stringify({
-    //         sendTo: sendTo,
-    //         type:type,
-    //         data:data
-    //     }))
-    // }
-
-    conn.send = function(type, data, sendTo) {
-        conn.send(JSON.stringify({
-        sendTo: sendTo,
-        type: type,
-        data: data
-        }));
-    };
-
-    conn.send('is-client-is-ready', null, sendTo);
-    // send('is-client-is-ready', null, sendTo);
-
-    </script>
-    <script>
-        
     </script>

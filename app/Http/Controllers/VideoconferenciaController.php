@@ -3,19 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserController;
 
 class VideoconferenciaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $clients;
+    public $userObj, $data;
+
+    public function __construct()
+    {
+        $this->clients = new \SplObjectStorage;  
+        $this->userObj = new \App\Models\User(); 
+    }    
+    
     public function index()
     {
         $users = User::where('id', '<>',Auth::user()->id)
             ->where('estado', '1')
-            ->get();
+            ->get();   
+
+        $users->updateSession(); 
 
         return view('videoconferencias.index', compact('users'));
     }
@@ -81,5 +91,31 @@ class VideoconferenciaController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function onOpen(ConnectionInterface $conn)
+    {
+        $queryString = $conn->httpRequest->getUri()->getQuery();
+        parse_str($queryString, $query);
+        if($data = $this->userObj->getUserBySession($query['token']))
+        {
+            $this->data = $data;
+            $conn->data = $data;
+            $this->clients->attach($conn);
+            //var_dump($this->userObj->userData('1'));
+            echo "New connection! ({$conn->resourceId})\n";
+        }
+    }
+
+    public function onMessage(ConnectionInterface $from, $msg)
+    {
+        $numRecv = count($this->clients) - 1;
+        echo sprintf('Connection %d sending message "%s" to %d other connection%s'."\n", $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
+
+        foreach ($this->clients as $client){
+            if($from !== $client){
+
+            }
+        }
     }
 }
