@@ -190,21 +190,4 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('info', 'reseteado');
     }
-
-    public function getUserBySession($sessionID)
-    {
-        $user = User::where('sessionID', $sessionID)
-                        ->first();
-
-        return $user; 
-    }
-
-    public function updateSession()
-    {
-        $session_id = session()->getId();
-        $user_update = User::where('id', Auth::user()->id)->first();
-        $user_update->update([
-            'sessionID' => $session_id,
-        ]);
-    }
 }

@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\UserController;
+use App\Services\UserService;
 
 class VideoconferenciaController extends Controller
 {
@@ -19,13 +19,14 @@ class VideoconferenciaController extends Controller
         $this->userObj = new \App\Models\User(); 
     }    
     
-    public function index()
+    public function index()//UserService $userService
     {
         $users = User::where('id', '<>',Auth::user()->id)
             ->where('estado', '1')
             ->get();   
-
-        $users->updateSession(); 
+        //$user = $userService->updateSession();
+        $userService = new UserService();        
+        $userService->updateSession();
 
         return view('videoconferencias.index', compact('users'));
     }
@@ -91,19 +92,22 @@ class VideoconferenciaController extends Controller
     public function destroy(string $id)
     {
         //
-    }
+    }  
 
     public function onOpen(ConnectionInterface $conn)
     {
         $queryString = $conn->httpRequest->getUri()->getQuery();
         parse_str($queryString, $query);
+
+        $userService = new UserService();   
+
         if($data = $this->userObj->getUserBySession($query['token']))
         {
             $this->data = $data;
             $conn->data = $data;
             $this->clients->attach($conn);
-            //var_dump($this->userObj->userData('1'));
-            echo "New connection! ({$conn->resourceId})\n";
+            $userService->updateConnection($conn->resourceId);
+            echo "New connection! ({$data->nombre})\n";
         }
     }
 
